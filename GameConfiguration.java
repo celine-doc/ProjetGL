@@ -41,6 +41,29 @@ public class GameConfiguration {
 	}
 	
 	
+	public static HashMap<String, Action> listActionChat = new HashMap<String, Action>();
+	public static ArrayList<String> listNomActionChat = new ArrayList<String>();
+	
+	public static void initActionChat() {
+		listActionChat.put("dormirPanier", new Action("bedroom","dormirPanier",RoomPosition.PANIER_CHIEN,0,"je suis allé dormir dans le panier du chien .",200));
+		listNomActionChat.add("dormirPanier");
+		listActionChat.put("dormirLit", new Action("bedroom","dormirLit",RoomPosition.LIT,1,"je suis allé dormir sur le lit , bien au chaud ",200));
+		listNomActionChat.add("dormirLit");
+		listActionChat.put("jouerArbreAChat", new Action("bedroom","jouerArbreAChat",RoomPosition.ARBRE_CHAT,0,"Wouhouuu ! C’est mon parc d’attractions à moi tout seul !",200));
+		listNomActionChat.add("jouerArbreAChat");
+		listActionChat.put("dormirCanape", new Action("living","dormirCanape",RoomPosition.CANAPE,0,"Je monte sur le canapé pour dormir… mon humain va râler, mais tant pis",160));
+		listNomActionChat.add("dormirCanape");
+		listActionChat.put("mangerGamelle", new Action("kitchen","manger",RoomPosition.GAMELLE,0,"J’me suis discrètement servi dans la gamelle du chien…",100));
+		listNomActionChat.add("mangerGamelle");
+		listActionChat.put("mangerGamelle2", new Action("kitchen","manger",RoomPosition.GAMELLE2,0,"Bon… c’est l’heure du festin ! À moi la gamelle !",100));
+		listNomActionChat.add("mangerGamelle2");
+		listActionChat.put("monterTable", new Action("kitchen","monterTable",RoomPosition.TABLE_A_MANGER,0,"Je monte juste jeter un œil… promis je touche à rien (enfin presque)",0));
+		listNomActionChat.add("monterTable");
+		
+		
+	}
+	
+	
 	
 	
 	public static final int WINDOW_WIDTH = 1700;
