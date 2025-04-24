@@ -214,9 +214,11 @@ public class MaisonGUI extends JFrame implements Runnable {
     }
 
     class ActionCat implements ActionListener {
-        @Override
+    	@Override
         public void actionPerformed(ActionEvent e) {
             // TODO Auto-generated method stub
+            testerJournal();
+            new JournalGUI("journal_cat.txt", "Journal du Chat").setVisible(true);
         }
     }
 
