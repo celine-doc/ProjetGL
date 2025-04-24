@@ -70,7 +70,7 @@ public class Dog extends Animal {
         journal.writeTxt(action.getEcritJournal());  // Écriture de la phrase dans le journal
         realiserAction(action, true);
         physicalState += 0.2;  // Augmentation de l'état physique
-        mentalState-=0.1; //apres une punition
+        mentalState+=0.1; //apres une punition
         learning.ajouterRecompense(action);
     }
 
