@@ -25,7 +25,7 @@ public class MobileElementManager {
     public MobileElementManager(Map map) {
         this.map = map;
         dog = new Dog(new Block(GameConfiguration.DEFAULT_POSITION_DOG_X, GameConfiguration.DEFAULT_POSITION_DOG_Y), "bathroom");
-        cat = new Cat(new Block(10, 12));
+        cat = new Cat(new Block(GameConfiguration.DEFAULT_POSITION_CAT_X, GameConfiguration.DEFAULT_POSITION_CAT_Y), "bathroom");
         GameConfiguration.initActionChien();
         random = new Random();
         chartManager = new ChartManager();
