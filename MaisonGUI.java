@@ -119,12 +119,6 @@ public class MaisonGUI extends JFrame implements Runnable {
     private void afficherGraphe() {
         ChartManager chartManager = manager.getChartManager();
 
-        // Initialiser les séries
-        confidenceSeries = new XYSeries("Confiance");
-        mentalStateSeries = new XYSeries("État mental");
-        physicalStateSeries = new XYSeries("État physique");
-
-        // Créer les graphiques
         confidenceChartPanel = new ChartPanel(chartManager.getTrustEvolutionChart());
         rightPanel.add(confidenceChartPanel);
 
@@ -139,31 +133,7 @@ public class MaisonGUI extends JFrame implements Runnable {
     }
 
     private void mettreAJourGraphes() {
-        ChartManager chartManager = manager.getChartManager();
-
-        // Mettre à jour les séries avec les dernières données
-        confidenceSeries.clear();
-        JFreeChart trustChart = chartManager.getTrustEvolutionChart();
-        XYSeries trustSeries = ((XYSeriesCollection) trustChart.getXYPlot().getDataset()).getSeries(0);
-        for (int i = 0; i < trustSeries.getItemCount(); i++) {
-            confidenceSeries.add(trustSeries.getX(i), trustSeries.getY(i));
-        }
-
-        mentalStateSeries.clear();
-        JFreeChart mentalChart = chartManager.getMentalStateEvolutionChart();
-        XYSeries mentalSeries = ((XYSeriesCollection) mentalChart.getXYPlot().getDataset()).getSeries(0);
-        for (int i = 0; i < mentalSeries.getItemCount(); i++) {
-            mentalStateSeries.add(mentalSeries.getX(i), mentalSeries.getY(i));
-        }
-
-        physicalStateSeries.clear();
-        JFreeChart physicalChart = chartManager.getPhysicalStateEvolutionChart();
-        XYSeries physicalSeries = ((XYSeriesCollection) physicalChart.getXYPlot().getDataset()).getSeries(0);
-        for (int i = 0; i < physicalSeries.getItemCount(); i++) {
-            physicalStateSeries.add(physicalSeries.getX(i), physicalSeries.getY(i));
-        }
-
-        // Rafraîchir l'affichage
+        // Les séries sont mises à jour dans ChartManager, juste rafraîchir
         confidenceChartPanel.repaint();
         mentalStateChartPanel.repaint();
         physicalStateChartPanel.repaint();
