@@ -1,28 +1,29 @@
 package engine;
 
 public class StateAnimal {
-	private int healthState;
-	private int mentalState;
+	private double physicalState;
+	private double mentalState;
 	
-	public StateAnimal(int healthState,int mentalState) {
-		this.healthState = healthState;
-		this.mentalState = mentalState;
+	public StateAnimal(double d,double e) {
+		this.physicalState = d;
+		this.mentalState = e;
 	}
 
-	public int getHealthState() {
-		return healthState;
+	public double getphysicalState() {
+		return physicalState;
 	}
 
-	public void setHealthState(int healthState) {
-		this.healthState = healthState;
+	public void setphysicalState(double d) {
+		this.physicalState = d;
 	}
 
-	public int getMentalState() {
+	public double getMentalState() {
 		return mentalState;
 	}
 
-	public void setMentalState(int mentalState) {
-		this.mentalState = mentalState;
+	public void setMentalState(double d) {
+		this.mentalState = d;
 	}
 	
 }
+
