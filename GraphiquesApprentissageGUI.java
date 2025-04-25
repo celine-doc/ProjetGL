@@ -3,21 +3,18 @@ package guiT;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
-import org.jfree.data.xy.XYSeries;
-import org.jfree.data.xy.XYSeriesCollection;
-
+import org.jfree.data.time.TimeSeries;
 import java.util.List;
 
 public class GraphiquesApprentissageGUI extends JFrame {
-    private ChartManager chartManager; 
-    private List<String> actionNames; // Liste des actions
+    private ChartManager chartManager;
+    private List<String> actionNames;
     private JPanel graphPanel;
     private String currentAction;
     private ChartPanel currentChartPanel;
-    private XYSeries currentSeries;
+    private TimeSeries currentSeries;
 
     public GraphiquesApprentissageGUI(String title, ChartManager chartManager, List<String> actionNames) {
         this.chartManager = chartManager;
@@ -58,17 +55,12 @@ public class GraphiquesApprentissageGUI extends JFrame {
 
     private void afficherGraphePourAction(String actionName) {
         currentAction = actionName;
-        currentSeries = new XYSeries(formaterNomAction(actionName));
+        currentSeries = chartManager.getActionSeries(actionName);
 
         JFreeChart jChart = chartManager.getActionEvolutionChart(actionName);
         if (jChart == null) {
             System.out.println("Erreur : Impossible d'obtenir le graphique pour " + actionName);
             return;
-        }
-
-        XYSeries series = ((XYSeriesCollection) jChart.getXYPlot().getDataset()).getSeries(0);
-        for (int i = 0; i < series.getItemCount(); i++) {
-            currentSeries.add(series.getX(i), series.getY(i));
         }
 
         graphPanel.removeAll();
@@ -79,26 +71,11 @@ public class GraphiquesApprentissageGUI extends JFrame {
         System.out.println("Graphique affiché pour " + formaterNomAction(actionName));
     }
 
-    /**
-     * Met à jour le graphique de l'action actuellement sélectionnée.
-     */
     public void mettreAJourGrapheAction() {
         if (currentAction == null || currentSeries == null || currentChartPanel == null) {
             return;
         }
-        currentSeries.clear();
-
-        JFreeChart jChart = chartManager.getActionEvolutionChart(currentAction);
-        if (jChart == null) {
-            System.out.println("Erreur : Impossible d'obtenir le graphique pour " + currentAction);
-            return;
-        }
-
-        XYSeries series = ((XYSeriesCollection) jChart.getXYPlot().getDataset()).getSeries(0);
-        for (int i = 0; i < series.getItemCount(); i++) {
-            currentSeries.add(series.getX(i), series.getY(i));
-        }
-
+        // La série est mise à jour dans ChartManager, juste rafraîchir
         currentChartPanel.repaint();
         graphPanel.revalidate();
         graphPanel.repaint();
