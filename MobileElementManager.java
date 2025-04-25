@@ -188,7 +188,7 @@ public class MobileElementManager {
                block.getColumn() < RoomPosition.NUMBER_BLOCK_LARGEUR_BATHROOM + RoomPosition.NUMBER_BLOCK_LARGEUR_LIVING;
     }
 
-    private void goToNewAction(MobileElement element, Action action) {
+    private void goToNewAction(MobileElement element, Action action) { // Déplacement pièce par pièce. 
         switch (element.getLocation()) {
             case "bathroom":
                 switch (action.getRoom()) {
@@ -221,6 +221,155 @@ public class MobileElementManager {
                         break;
                 }
                 break;
+            case "laundry" :
+            	switch(action.getRoom()) {
+            	case "bathroom":
+            		element.addAction("goBathroom");
+                    element.addAction(action.getName());
+                    break;
+                case "laundry":
+                    element.addAction(action.getName());
+                    break;
+                case "kitchen":
+                    element.addAction("goKitchen");
+                    element.addAction(action.getName());
+                    break;
+                case "bedroom":
+                	element.addAction("goLiving");
+                    element.addAction("goBedroom");
+                    element.addAction(action.getName());
+                    break;
+                case "living":
+                    element.addAction("goLiving");
+                    element.addAction(action.getName());
+                    break;
+                case "garden":
+                    element.addAction("goLiving");
+                    element.addAction("goGarden");
+                    element.addAction(action.getName());
+                    break;
+            	}
+            	break;
+            case "kitchen" :
+            	switch(action.getRoom()) {
+            	case "bathroom":
+            		element.addAction("goLaundry");
+            		element.addAction("goBathroom");
+                    element.addAction(action.getName());
+                    break;
+                case "laundry":
+                	element.addAction("goLaundry");
+                    element.addAction(action.getName());
+                    break;
+                case "kitchen":
+                    element.addAction(action.getName());
+                    break;
+                case "bedroom":
+                	element.addAction("goLiving");
+                    element.addAction("goBedroom");
+                    element.addAction(action.getName());
+                    break;
+                case "living":
+                    element.addAction("goLiving");
+                    element.addAction(action.getName());
+                    break;
+                case "garden":
+                    element.addAction("goLiving");
+                    element.addAction("goGarden");
+                    element.addAction(action.getName());
+                    break;
+            	}
+            	break;
+            case "bedroom" :
+            	switch(action.getRoom()) {
+            	case "bathroom":
+            		element.addAction("goBathroom");
+                    element.addAction(action.getName());
+                    break;
+                case "laundry":
+                	element.addAction("goBathroom");
+                	element.addAction("goLaundry");
+                    element.addAction(action.getName());
+                    break;
+                case "kitchen":
+                	element.addAction("goLiving");
+                	element.addAction("goKitchen");
+                    element.addAction(action.getName());
+                    break;
+                case "bedroom":
+                    element.addAction(action.getName());
+                    break;
+                case "living":
+                    element.addAction("goLiving");
+                    element.addAction(action.getName());
+                    break;
+                case "garden":
+                    element.addAction("goLiving");
+                    element.addAction("goGarden");
+                    element.addAction(action.getName());
+                    break;
+            	}
+            	break;
+            case "living" :
+            	switch(action.getRoom()) {
+            	case "bathroom":
+            		element.addAction("goBedroom");
+            		element.addAction("goBathroom");
+                    element.addAction(action.getName());
+                    break;
+                case "laundry":
+                	element.addAction("goLaundry");
+                    element.addAction(action.getName());
+                    break;
+                case "kitchen":
+                	element.addAction("goKitchen");
+                    element.addAction(action.getName());
+                    break;
+                case "bedroom":
+                	element.addAction("goBedroom");
+                    element.addAction(action.getName());
+                    break;
+                case "living":
+                    element.addAction(action.getName());
+                    break;
+                case "garden":
+                    element.addAction("goGarden");
+                    element.addAction(action.getName());
+                    break;
+            	}
+            	break;
+            case "garden" :
+            	switch(action.getRoom()) {
+            	case "bathroom":
+            		element.addAction("goLiving");
+            		element.addAction("goBedroom");
+            		element.addAction("goBathroom");
+                    element.addAction(action.getName());
+                    break;
+                case "laundry":
+                	element.addAction("goLiving");
+                	element.addAction("goLaundry");
+                    element.addAction(action.getName());
+                    break;
+                case "kitchen":
+                	element.addAction("goLiving");
+                	element.addAction("goKitchen");
+                    element.addAction(action.getName());
+                    break;
+                case "bedroom":
+                	element.addAction("goLiving");
+                	element.addAction("goBedroom");
+                    element.addAction(action.getName());
+                    break;
+                case "living":
+                	element.addAction("goLiving");
+                    element.addAction(action.getName());
+                    break;
+                case "garden":
+                    element.addAction(action.getName());
+                    break;
+            	}
+            	break;
         }
     }
 
