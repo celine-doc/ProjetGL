@@ -49,7 +49,7 @@ public class MobileElementManager{
 		mettreAJourMetriquesApprentissage(dog); // Enregistrer les données après chaque action
 		if(father.getActionAnimal()){
 			// Si true -> va vers l'animal en target
-			goToNewAction(father,new Action(dog.getLocation(),"targetDog",dog.getPosition(),0,"bagare",1);
+			goToNewAction(father,new Action(dog.getLocation(),"targetDog",dog.getPosition(),0,"bagarre",1);
 			mooveElement(father);
 		}else{
 			// Sinon continue de bouger aléatoirement ( possibilité de mettre en place changement de pièce avec goToNewAction
