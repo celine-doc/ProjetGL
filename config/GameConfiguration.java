@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 
 import javax.imageio.ImageIO;
 
@@ -16,19 +17,108 @@ import map.Block;
  *
  */
 public class GameConfiguration {
+	// Initialisation (appel toutes les fonctions )
+	public static void initialisation() {
+		initActionChien();
+		initActionChat();
+		initBlockAccessible();
+	}
 	
+	// Gestions des blocks accessible
+	private static ArrayList<Block> blockInaccessible = new ArrayList<Block>();
+	
+	private static void initBlockAccessible() {
+		// Toilet 
+		adde(RoomPosition.TOILET_X,RoomPosition.TOILET_Y,SIZE_TOILET_X,SIZE_TOILET_Y);
+		adde(RoomPosition.EVIER_SALLE_DE_BAIN_X,RoomPosition.EVIER_SALLE_DE_BAIN_Y,SIZE_EVIER_SALLE_DE_BAIN_X,SIZE_EVIER_SALLE_DE_BAIN_Y);
+		adde(RoomPosition.MEUBLE_SALLE_DE_BAIN_X,RoomPosition.MEUBLE_SALLE_DE_BAIN_Y,SIZE_MEUBLE_SALLE_DE_BAIN_X,SIZE_MEUBLE_SALLE_DE_BAIN_Y);
+		adde(RoomPosition.BAIGNOIRE_X,RoomPosition.BAIGNOIRE_Y,SIZE_BAIGNOIRE_X,SIZE_BAIGNOIRE_Y);
+		// Buanderie
+		adde(RoomPosition.MACHINE_A_LAVER_X,RoomPosition.MACHINE_A_LAVER_Y,SIZE_MACHINE_A_LAVER_X,SIZE_MACHINE_A_LAVER_Y);
+		adde(RoomPosition.SECHOIR_X,RoomPosition.SECHOIR_Y,SIZE_SECHOIR_X,SIZE_SECHOIR_Y);
+		adde(RoomPosition.MEUBLE_BUANDERIE_X,RoomPosition.MEUBLE_BUANDERIE_Y,SIZE_MEUBLE_BUANDERIE_Y,SIZE_MEUBLE_BUANDERIE_Y);
+		adde(RoomPosition.PANIER_LINGE_X,RoomPosition.PANIER_LINGE_Y,SIZE_PANIER_LINGE_X,SIZE_PANIER_LINGE_Y);
+		// Cuisine
+		adde(RoomPosition.EVIER_CUISINE_X,RoomPosition.EVIER_CUISINE_Y,SIZE_EVIER_CUISINE_X,SIZE_EVIER_CUISINE_Y);
+		adde(RoomPosition.FOUR_X,RoomPosition.FOUR_Y,SIZE_FOUR_X,SIZE_FOUR_Y);
+		adde(RoomPosition.FRIGO_X,RoomPosition.FRIGO_Y,SIZE_FRIGO_X,SIZE_FRIGO_Y);
+		adde(RoomPosition.GAMELLE_X,RoomPosition.GAMELLE_Y,SIZE_GAMELLE_X,SIZE_GAMELLE_Y);
+		adde(RoomPosition.GAMELLE2_X,RoomPosition.GAMELLE2_Y,SIZE_GAMELLE2_X,SIZE_GAMELLE2_Y);
+		adde(RoomPosition.TABLE_A_MANGER_X,RoomPosition.TABLE_A_MANGER_Y,SIZE_TABLE_A_MANGER_X,SIZE_TABLE_A_MANGER_Y);
+		adde(RoomPosition.MEUBLE_CUISINE_X,RoomPosition.MEUBLE_CUISINE_Y,SIZE_MEUBLE_CUISINE_X,SIZE_MEUBLE_CUISINE_Y);
+		
+		// Chambre
+		adde(RoomPosition.ARBRE_CHAT_X,RoomPosition.ARBRE_CHAT_Y,SIZE_ARBRE_CHAT_X,SIZE_ARBRE_CHAT_Y);
+		adde(RoomPosition.LIT_X,RoomPosition.LIT_Y,SIZE_LIT_X,SIZE_LIT_Y);
+		adde(RoomPosition.ARMOIRE_X,RoomPosition.ARMOIRE_Y,SIZE_ARMOIRE_X,SIZE_ARMOIRE_Y);
+		adde(RoomPosition.PANIER_CHIEN_X,RoomPosition.PANIER_CHIEN_Y,SIZE_PANIER_CHIEN_X,SIZE_PANIER_CHIEN_Y);
+		adde(RoomPosition.PLANTE1_X,RoomPosition.PLANTE1_Y,SIZE_PLANTE1_X,SIZE_PLANTE1_Y);
+		
+		// Salon
+		adde(RoomPosition.PLANTE2_X,RoomPosition.PLANTE2_Y,SIZE_PLANTE2_X,SIZE_PLANTE2_Y);
+		adde(RoomPosition.CANAPE_X,RoomPosition.CANAPE_Y,SIZE_CANAPE_X,SIZE_CANAPE_Y);
+		adde(RoomPosition.BIBLIOTHEQUE_X,RoomPosition.BIBLIOTHEQUE_Y,SIZE_BIBLIOTHEQUE_X,SIZE_BIBLIOTHEQUE_Y);
+		
+		// Jardin
+		adde(RoomPosition.CLOTURE1_X,RoomPosition.CLOTURE_Y,SIZE_CLOTURE_X,SIZE_CLOTURE_Y);
+		adde(RoomPosition.CLOTURE2_X,RoomPosition.CLOTURE_Y,SIZE_CLOTURE_X,SIZE_CLOTURE_Y);
+		adde(RoomPosition.CLOTURE3_X,RoomPosition.CLOTURE_Y,SIZE_CLOTURE_X,SIZE_CLOTURE_Y);
+		adde(RoomPosition.CLOTURE4_X,RoomPosition.CLOTURE_Y,SIZE_CLOTURE_X,SIZE_CLOTURE_Y);
+		adde(RoomPosition.NICHE_X,RoomPosition.NICHE_Y,SIZE_NICHE_X,SIZE_NICHE_Y);
+		adde(RoomPosition.TONDEUSE_X,RoomPosition.TONDEUSE_Y,SIZE_TONDEUSE_X,SIZE_TONDEUSE_Y);
+		adde(RoomPosition.BUISSON_X,RoomPosition.BUISSON_Y,SIZE_BUISSON_X,SIZE_BUISSON_Y);
+		adde(RoomPosition.NAIN_X,RoomPosition.NAIN_Y,SIZE_NAIN_X,SIZE_NAIN_Y);
+		
+		// Mur
+		
+		
+	}
+	// Objet 
+	private static void adde(int objetX, int objetY,int objetSizeX,int objetSizeY) {
+		Block blockObjet = new Block(objetX/BLOCK_SIZE,objetY/BLOCK_SIZE);
+		blockInaccessible.add(blockObjet);
+		int nbrLine = Math.abs(blockObjet.getLine()-(objetSizeX/BLOCK_SIZE));
+		int nbrColomn = Math.abs(blockObjet.getColumn()-(objetSizeY/BLOCK_SIZE));
+		for(int j = 0;j<nbrLine;j++){
+			blockInaccessible.add( new Block(blockObjet.getLine()+j, blockObjet.getColumn()));
+		}
+		for(int j = 0;j<nbrColomn;j++){
+			blockInaccessible.add( new Block(blockObjet.getLine(), blockObjet.getColumn()+j));
+		}
+		for(int j = 0;j<nbrColomn;j++){
+			blockInaccessible.add( new Block(blockObjet.getLine()+j, blockObjet.getColumn()+nbrColomn));
+		}
+		for(int j = 0;j<nbrColomn;j++){
+			blockInaccessible.add( new Block(blockObjet.getLine()+nbrColomn, blockObjet.getColumn()+j));
+		}	
+	}
+	//
+	public static boolean isAccessible(Block block) {
+		for(Iterator<Block> it = blockInaccessible.iterator();it.hasNext();) {
+			Block test = it.next();
+			if(test.equals(block)) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	
+	
+	
+	// Gestion des actions
 	
 	public static HashMap<String, Action> listActionChien = new HashMap<String, Action>();
 	public static ArrayList<String> listNomActionChien = new ArrayList<String>();
 	
 	public static void initActionChien() {
-		listActionChien.put("dormirPanier", new Action("bedroom","dormirPanier",RoomPosition.PANIER_CHIEN,20,"je suis allé dormir dans mon panier, au chaud.",200));
+		listActionChien.put("dormirPanier", new Action("bedroom","dormirPanier",RoomPosition.PANIER_CHIEN,10,"je suis allé dormir dans mon panier, au chaud.",200));
 		listNomActionChien.add("dormirPanier");
 		listActionChien.put("dormirNiche", new Action("garden","dormirNiche",RoomPosition.NICHE,15,"je suis allé dormir dans ma niche, au frais, pour protéger mon téritoire.",200));
 		listNomActionChien.add("dormirNiche");
-		listActionChien.put("dormirLit", new Action("bedroom","dormirLit",RoomPosition.LIT,10,"Je pars dormir sur le lit… oui je sais que je n’ai pas le droit, mais tant pis !",200));
+		listActionChien.put("dormirLit", new Action("bedroom","dormirLit",RoomPosition.LIT,15,"Je pars dormir sur le lit… oui je sais que je n’ai pas le droit, mais tant pis !",200));
 		listNomActionChien.add("dormirLit");
-		listActionChien.put("dormirCanape", new Action("living","dormirCanape",RoomPosition.CANAPE,15,"Je monte sur le canapé pour dormir… mon humain va râler, mais tant pis",160));
+		listActionChien.put("dormirCanape", new Action("living","dormirCanape",RoomPosition.CANAPE,20,"Je monte sur le canapé pour dormir… mon humain va râler, mais tant pis",160));
 		listNomActionChien.add("dormirCanape");
 		listActionChien.put("mangerGamelle", new Action("kitchen","manger",RoomPosition.GAMELLE,20,"Bon… c’est l’heure du festin ! À moi la gamelle !",100));
 		listNomActionChien.add("mangerGamelle");
@@ -36,10 +126,7 @@ public class GameConfiguration {
 		listNomActionChien.add("mangerGamelle2");
 		listActionChien.put("monterTable", new Action("kitchen","monterTable",RoomPosition.TABLE_A_MANGER,5,"Je monte juste jeter un œil… promis je touche à rien (enfin presque)",0));
 		listNomActionChien.add("monterTable");
-		
-		
 	}
-	
 	
 	public static HashMap<String, Action> listActionChat = new HashMap<String, Action>();
 	public static ArrayList<String> listNomActionChat = new ArrayList<String>();
@@ -125,7 +212,7 @@ public class GameConfiguration {
 		public static final int SIZE_FRIGO_X = 50;
 		public static final int SIZE_FRIGO_Y = 75;
 		
-		public static final int SIZE_MEBUBLE_CUISINE_X = 200;
+		public static final int SIZE_MEUBLE_CUISINE_X = 200;
 		public static final int SIZE_MEUBLE_CUISINE_Y = 150;
 		
 		public static final int SIZE_MACHINE_A_LAVER_X = 75;
@@ -250,14 +337,13 @@ public class GameConfiguration {
 		public static final Image IMAGE_NAIN = readImage("src/images/nainDeJardin.png");
 		public static final Image IMAGE_PLANTE1 = readImage("src/images/plante1.png");
 		public static final Image IMAGE_PLANTE2 = readImage("src/images/plante2.png");
-		// A implementer 
 		public static final Image IMAGE_TELEVISION = readImage("src/images/television.png");
 		public static final Image IMAGE_TAPIS1 = readImage("src/images/tapis1.png");
 		public static final Image IMAGE_TAPIS2 = readImage("src/images/tapis2.png");
 		
 		
 		
-		public static final Image IMAGE_ = readImage("src/images/.png");
+		// public static final Image IMAGE_ = readImage("src/images/.png");
 	
 	
 	 public static Image readImage(String filePath) {
