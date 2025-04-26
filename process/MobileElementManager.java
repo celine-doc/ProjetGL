@@ -7,13 +7,13 @@ import java.util.Iterator;
 import config.GameConfiguration;
 import config.RoomPosition;
 import engine.Action;
+import guiT.ChartManager;
 import map.Block;
 import map.Map;
 import mobile.Animal;
 import mobile.Cat;
 import mobile.Dog;
 import mobile.MobileElement;
-import guiT.ChartManager;
 
 /**
  * 
@@ -23,27 +23,28 @@ public class MobileElementManager{
 	private Map map;
 	private Dog dog;
 	private Cat cat;
-        private ChartManager chartManager;
+	private ChartManager chartManager;
 
 	public MobileElementManager(Map map) {
 		this.map = map;
 		//positions initiales 
 		dog = new Dog(new Block(GameConfiguration.DEFAULT_POSITION_DOG_X,GameConfiguration.DEFAULT_POSITION_DOG_Y), "bathroom");
-		GameConfiguration.initActionChien();
-                chartManager = new ChartManager();
+		GameConfiguration.initialisation();
+		chartManager = new ChartManager();
 	}
 
 	// gestion des actions des animaux et des pnjs
 	public void action(int random) {
+		System.out.println(random);
 		if(dog.dontHaveAction()) {
 			Action act = selectedAction(dog,random);
-			System.out.println(act.getName());
+			// System.out.println(act.getName());
 			goToNewAction(dog,act);
 
 		}else {
 			mooveElement(dog);
 		}
-                mettreAJourMetriquesApprentissage(dog); // Enregistrer les données après chaque action
+		mettreAJourMetriquesApprentissage(dog); // Enregistrer les données après chaque action
 	}
 	public Action selectedAction(Animal animal, int random) {
 		ArrayList<String> listNomAction = animal.getListNomAction();
@@ -64,11 +65,12 @@ public class MobileElementManager{
 		return cat;
 	}
 
-        public ChartManager getChartManager() {
-           return chartManager;
-        }
+	public ChartManager getChartManager() {
+		return chartManager;
+	}
 
-	// déplacement des éléments
+	// déplacement des éléments temps normal
+	// --------------
 	private void moveLeftElement(MobileElement element) {
 		Block position = element.getPosition();
 		if (position.getLine() > 0) {
@@ -98,6 +100,49 @@ public class MobileElementManager{
 			element.setPosition(newPosition);
 		}
 	}
+	// --------------
+	// Déplacement aléatoire 
+	private void randomMoveLeftElement(MobileElement element) {
+		Block position = element.getPosition();
+		Block newPosition = map.getBlock(position.getLine() - 1, position.getColumn());
+		if (position.getLine() > 0 && GameConfiguration.isAccessible(newPosition)) {
+			element.setPosition(newPosition);
+		}else {
+			randomMoveUpElement(element);
+		}
+	}
+	private void randomMoveRightElement(MobileElement element) {
+		Block position = element.getPosition();
+		Block newPosition = map.getBlock(position.getLine() + 1, position.getColumn());
+		if (position.getLine() < GameConfiguration.LINE_COUNT - 1 && GameConfiguration.isAccessible(newPosition)) {
+			element.setPosition(newPosition);
+		}else {
+			randomMoveDownElement(element);
+		}
+	}
+	private void randomMoveUpElement(MobileElement element) {
+		Block position = element.getPosition();
+		Block newPosition = map.getBlock(position.getLine(), position.getColumn() - 1);
+		if (position.getColumn() > 0 && GameConfiguration.isAccessible(newPosition)) {
+			element.setPosition(newPosition);
+		}else {
+			randomMoveLeftElement(element);
+		}
+	}
+	private void randomMoveDownElement(MobileElement element) {
+		Block position = element.getPosition();
+		Block newPosition = map.getBlock(position.getLine(), position.getColumn() + 1);
+		if (position.getColumn() < GameConfiguration.COLUMN_COUNT - 1 && GameConfiguration.isAccessible(newPosition)) {
+			element.setPosition(newPosition);
+		}else {
+			randomMoveRightElement(element);
+		}
+	}
+	
+	
+	
+	
+	
 	// déplacement vers une destination précise en commençant par les déplacements verticale ou horizontale
 	private void horizontalDeplacement(Block destination, MobileElement element) {
 		Block actualPos = element.getPosition();
@@ -132,65 +177,6 @@ public class MobileElementManager{
 			if(destination.getLine() != element.getPosition().getLine()) {
 				horizontalDeplacement(destination, element);
 			}
-		}
-	}
-	// méthodes pour la pièce de la destination, voir si toujours utile ! 
-	private String pieceDestination(Block destination) {
-		if(isInBathrom(destination)) {
-			return "bathroom";
-		}else {
-			if(isInLaundry(destination)) {
-				return "laundry";
-			}else {
-				if(isInKitchen(destination)) {
-					return "kitchen";
-				}else {
-					if(isInBedroom(destination)) {
-						return "bedroom";
-					}else {
-						if(isInLiving(destination)) {
-							return "living";
-						}else {
-							return "garden";
-						}
-					}
-				}
-			}
-		}
-	}
-	private boolean isInBathrom(Block block) {
-		if(block.getLine()<RoomPosition.LONGUEUR_BATHROOM && block.getColumn()<RoomPosition.LARGEUR_BATHROOM) {
-			return true;
-		}else {
-			return false;
-		}
-	}
-	private boolean isInLaundry(Block block) {
-		if(block.getLine()<RoomPosition.LONGUEUR_BATHROOM && block.getColumn()<RoomPosition.LARGEUR_BATHROOM+RoomPosition.LARGEUR_LAUNDRY) {
-			return true;
-		}else {
-			return false;
-		}
-	}
-	private boolean isInKitchen(Block block) {
-		if(block.getLine()<RoomPosition.LONGUEUR_BATHROOM && block.getColumn()<RoomPosition.LARGEUR_BATHROOM+RoomPosition.LARGEUR_LAUNDRY+RoomPosition.SIZE_KITCHEN) {
-			return true;
-		}else {
-			return false;
-		}
-	}
-	private boolean isInBedroom(Block block) {
-		if(block.getLine()<RoomPosition.LONGUEUR_BATHROOM+RoomPosition.LONGUEUR_BEDROOM && block.getColumn()<RoomPosition.LARGEUR_BATHROOM){
-			return true;
-		}else {
-			return false;
-		}
-	}
-	private boolean isInLiving(Block block) {
-		if(block.getLine()<RoomPosition.LONGUEUR_BATHROOM+RoomPosition.LONGUEUR_BEDROOM && block.getColumn()<RoomPosition.LARGEUR_BATHROOM + RoomPosition.LARGEUR_LAUNDRY){
-			return true;
-		}else {
-			return false;
 		}
 	}
 	// Définition d'un nouvel itinéraire
@@ -470,7 +456,8 @@ public class MobileElementManager{
 				}
 				break;
 			default:
-				System.err.println("err, goBedroom");
+				System.err.println("err, goBedroom : " + element.getAction());
+
 				break;
 			}
 			break;
@@ -524,26 +511,116 @@ public class MobileElementManager{
 		case "dormirPanier":// Action dormirPanier
 			goTo_hF(RoomPosition.PANIER_CHIEN,element);
 			if(element.getPosition().equals(RoomPosition.PANIER_CHIEN)) {
-				dog.interagir("dormirPanier");
-				element.supFirstAction();
+				if(element.getActionTime()==0) {
+					dog.interagir("dormirPanier");
+				}else {
+					if(element.getActionTime() >= GameConfiguration.listActionChien.get(element.getAction()).getTimeAction()) {
+						element.supFirstAction();
+						element.setActionTime(0);
+					}else {
+						element.setActionTime(element.getActionTime()+1);
+						
+					}
+				}
 			}
 			break;
 		case "dormirNiche":
 			goTo_hF(RoomPosition.NICHE,element);
 			if(element.getPosition().equals(RoomPosition.NICHE)) {
-				dog.interagir("dormirNiche"); // déclenche Dog.dormirPanier(), puis realiserAction(action, true) donc augmentation de la proba (recompense)
-				element.supFirstAction();
+				if(element.getActionTime()==0) {
+					dog.interagir("dormirNiche");// déclenche Dog.dormirNiche(), puis realiserAction(action, true) donc augmentation de la proba (recompense)
+				}else {
+					if(element.getActionTime() >= GameConfiguration.listActionChien.get(element.getAction()).getTimeAction()) {
+						element.supFirstAction();
+						element.setActionTime(0);
+					}else {
+						element.setActionTime(element.getActionTime()+1);
+					}
+				}
 			}
+			break;
+		case "dormirLit":
+			goTo_hF(RoomPosition.LIT, element);
+			if(element.getPosition().equals(RoomPosition.PANIER_CHIEN)) {
+				if(element.getActionTime()==0) {
+					dog.interagir("dormirLit");
+				}else {
+					if(element.getActionTime() >= GameConfiguration.listActionChien.get(element.getAction()).getTimeAction()) {
+						element.supFirstAction();
+						element.setActionTime(0);
+					}else {
+						element.setActionTime(element.getActionTime()+1);
+					}
+				}
+			}
+			break;
+		case "dormirCanape":
+			goTo_hF(RoomPosition.CANAPE, element);
+			if(element.getActionTime()==0) {
+				dog.interagir("dormirCanape");
+			}else {
+				if(element.getActionTime() >= GameConfiguration.listActionChien.get(element.getAction()).getTimeAction()) {
+					element.supFirstAction();
+					element.setActionTime(0);
+				}else {
+					element.setActionTime(element.getActionTime()+1);
+				}
+			}
+			break;
+		case "mangerGamelle":
+			goTo_hF(RoomPosition.GAMELLE, element);
+			if(element.getActionTime()==0) {
+				dog.interagir("mangerGamelle");
+			}else {
+				if(element.getActionTime() >= GameConfiguration.listActionChien.get(element.getAction()).getTimeAction()) {
+					element.supFirstAction();
+					element.setActionTime(0);
+				}else {
+					element.setActionTime(element.getActionTime()+1);
+				}
+			}
+			break;
+		case "mangerGamelle2":
+			goTo_hF(RoomPosition.GAMELLE2, element);
+			if(element.getActionTime()==0) {
+				dog.interagir("mangerGamelle2");
+			}else {
+				if(element.getActionTime() >= GameConfiguration.listActionChien.get(element.getAction()).getTimeAction()) {
+					element.supFirstAction();
+					element.setActionTime(0);
+				}else {
+					element.setActionTime(element.getActionTime()+1);
+				}
+			}
+			break;
+		case "monterTable":
+			goTo_hF(RoomPosition.TABLE_A_MANGER, element);
+			if(element.getActionTime()==0) {
+				dog.interagir("monterTable");
+			}else {
+				if(element.getActionTime() >= GameConfiguration.listActionChien.get(element.getAction()).getTimeAction()) {
+					element.supFirstAction();
+					element.setActionTime(0);
+				}else {
+					element.setActionTime(element.getActionTime()+1);
+				}
+			}
+			break;
+		default :
+			System.err.println("err default"+element.getAction());
+			element.supFirstAction();
 		}
 	}
 
 
 
 
-       private void mettreAJourMetriquesApprentissage(Dog dog) {
-          chartManager.registerActionScores(dog);
-          chartManager.registerTrustByStep(dog.getConfiance());
-          chartManager.registerMentalStateByStep(dog.getMentalState());
-          chartManager.registerPhysicalStateByStep(dog.getPhysicalState());
-      }
+	private void mettreAJourMetriquesApprentissage(Dog dog) {
+		dog.getLearning().degradationNaturelle(); // Dégrader les probabilités
+        dog.degradationNaturelleMetriques(); // Dégrader les métriques
+		chartManager.registerActionScores(dog);
+		chartManager.registerTrustByStep(dog.getConfiance());
+		chartManager.registerMentalStateByStep(dog.getMentalState());
+		chartManager.registerPhysicalStateByStep(dog.getPhysicalState());
+	}
 }
