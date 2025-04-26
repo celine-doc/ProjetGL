@@ -22,19 +22,19 @@ public class GameConfiguration {
 	public static ArrayList<String> listNomActionChien = new ArrayList<String>();
 	
 	public static void initActionChien() {
-		listActionChien.put("dormirPanier", new Action("bedroom","dormirPanier",RoomPosition.PANIER_CHIEN,0,"je suis allé dormir dans mon panier, au chaud.",200));
+		listActionChien.put("dormirPanier", new Action("bedroom","dormirPanier",RoomPosition.PANIER_CHIEN,20,"je suis allé dormir dans mon panier, au chaud.",200));
 		listNomActionChien.add("dormirPanier");
-		listActionChien.put("dormirNiche", new Action("garden","dormirNiche",RoomPosition.NICHE,1,"je suis allé dormir dans ma niche, au frais, pour protéger mon téritoire.",200));
+		listActionChien.put("dormirNiche", new Action("garden","dormirNiche",RoomPosition.NICHE,15,"je suis allé dormir dans ma niche, au frais, pour protéger mon téritoire.",200));
 		listNomActionChien.add("dormirNiche");
-		listActionChien.put("dormirLit", new Action("bedroom","dormirLit",RoomPosition.LIT,0,"Je pars dormir sur le lit… oui je sais que je n’ai pas le droit, mais tant pis !",200));
+		listActionChien.put("dormirLit", new Action("bedroom","dormirLit",RoomPosition.LIT,10,"Je pars dormir sur le lit… oui je sais que je n’ai pas le droit, mais tant pis !",200));
 		listNomActionChien.add("dormirLit");
-		listActionChien.put("dormirCanape", new Action("living","dormirCanape",RoomPosition.CANAPE,0,"Je monte sur le canapé pour dormir… mon humain va râler, mais tant pis",160));
+		listActionChien.put("dormirCanape", new Action("living","dormirCanape",RoomPosition.CANAPE,15,"Je monte sur le canapé pour dormir… mon humain va râler, mais tant pis",160));
 		listNomActionChien.add("dormirCanape");
-		listActionChien.put("mangerGamelle", new Action("kitchen","manger",RoomPosition.GAMELLE,0,"Bon… c’est l’heure du festin ! À moi la gamelle !",100));
+		listActionChien.put("mangerGamelle", new Action("kitchen","manger",RoomPosition.GAMELLE,20,"Bon… c’est l’heure du festin ! À moi la gamelle !",100));
 		listNomActionChien.add("mangerGamelle");
-		listActionChien.put("mangerGamelle2", new Action("kitchen","manger",RoomPosition.GAMELLE2,0,"J’me suis discrètement servi dans la gamelle du chat…",100));
+		listActionChien.put("mangerGamelle2", new Action("kitchen","manger",RoomPosition.GAMELLE2,15,"J’me suis discrètement servi dans la gamelle du chat…",100));
 		listNomActionChien.add("mangerGamelle2");
-		listActionChien.put("monterTable", new Action("kitchen","monterTable",RoomPosition.TABLE_A_MANGER,0,"Je monte juste jeter un œil… promis je touche à rien (enfin presque)",0));
+		listActionChien.put("monterTable", new Action("kitchen","monterTable",RoomPosition.TABLE_A_MANGER,5,"Je monte juste jeter un œil… promis je touche à rien (enfin presque)",0));
 		listNomActionChien.add("monterTable");
 		
 		
