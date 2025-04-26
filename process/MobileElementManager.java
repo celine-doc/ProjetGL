@@ -50,12 +50,13 @@ public class MobileElementManager{
 		HashMap<String,Action> listAction = animal.getListActionPossible();
 		for(Iterator<String> it = listNomAction.iterator();it.hasNext();) {
 			String currentAction = it.next();
-			if(random < listAction.get(currentAction).getProba() || random == listAction.get(currentAction).getProba()) {
+			if (random < animal.getProba(listAction.get(currentAction)) || random == animal.getProba(listAction.get(currentAction))) { //récupère la derniere proba de l'action chez l'animal 
 				return listAction.get(currentAction);
 			}
 		}
 		return null;
 	}
+
 	public Dog getDog() {
 		return dog;
 	}
@@ -523,12 +524,14 @@ public class MobileElementManager{
 		case "dormirPanier":// Action dormirPanier
 			goTo_hF(RoomPosition.PANIER_CHIEN,element);
 			if(element.getPosition().equals(RoomPosition.PANIER_CHIEN)) {
+				dog.interagir("dormirPanier");
 				element.supFirstAction();
 			}
 			break;
 		case "dormirNiche":
 			goTo_hF(RoomPosition.NICHE,element);
 			if(element.getPosition().equals(RoomPosition.NICHE)) {
+				dog.interagir("dormirNiche"); // déclenche Dog.dormirPanier(), puis realiserAction(action, true) donc augmentation de la proba (recompense)
 				element.supFirstAction();
 			}
 		}
