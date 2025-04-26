@@ -48,9 +48,8 @@ public class MobileElementManager{
 		}
 		mettreAJourMetriquesApprentissage(dog); // Enregistrer les données après chaque action
 		if(father.getActionAnimal()){
-			// Si true -> va vers l'animal en target
-			goToNewAction(father,new Action(dog.getLocation(),"targetDog",dog.getPosition(),0,"bagarre",1);
-			mooveElement(father);
+			// Si true -> va vers l'animal en target 
+			targeting(father);// méthode targeting pour les humains avec différent calcul que mooveElement
 		}else{
 			// Sinon continue de bouger aléatoirement ( possibilité de mettre en place changement de pièce avec goToNewAction
 			// father.action = "randomMoove";
@@ -622,9 +621,218 @@ public class MobileElementManager{
 			element.supFirstAction();
 		}
 	}
-
-
-
+	private void targeting(MobileElement humain){// On reprend la même typo que pour les animaux
+		if(humain.getLocation() != humain.getTarget().getLocation()){
+		switch(humain.getLocation()) {
+		case "bathroom" :
+			switch(humain.getTarget().getLocation()) {
+			case "laundry" :
+				goTo_hF(RoomPosition.DOOR_BATHROOM_TO_LAUNDRY,humain);
+				if(humain.getPosition().equals(RoomPosition.DOOR_BATHROOM_TO_LAUNDRY)){
+					humain.setLocation("laundry");
+				}
+				break;
+			case "kitchen" :
+				goTo_hF(RoomPosition.DOOR_BATHROOM_TO_LAUNDRY,humain);
+				if(humain.getPosition().equals(RoomPosition.DOOR_BATHROOM_TO_LAUNDRY)){
+					humain.setLocation("laundry");
+				}
+				break;
+			case "bedroom" :
+				goTo_vF(RoomPosition.DOOR_BATHROOM_TO_BEDROOM,humain);
+				if(humain.getPosition().equals(RoomPosition.DOOR_BATHROOM_TO_BEDROOM)){
+					humain.setLocation("bedroom");
+				}
+				break;
+			case "living" :
+				goTo_hF(RoomPosition.DOOR_BATHROOM_TO_LAUNDRY,humain);
+				if(humain.getPosition().equals(RoomPosition.DOOR_BATHROOM_TO_LAUNDRY)){
+					humain.setLocation("laundry");
+				}
+				break;
+			case "garden" :
+				goTo_hF(RoomPosition.DOOR_BATHROOM_TO_LAUNDRY,humain);
+				if(humain.getPosition().equals(RoomPosition.DOOR_BATHROOM_TO_LAUNDRY)){
+					humain.setLocation("laundry");
+				}
+				break;
+			}
+			break;
+		case "laundry" :
+			switch(humain.getTarget().getLocation()) {
+			case "bathroom" :
+				goTo_hF(RoomPosition.DOOR_LAUNDRY_TO_BATHROOM,humain);
+				if(humain.getPosition().equals(RoomPosition.DOOR_LAUNDRY_TO_BATHROOM)){
+					humain.setLocation("bathroom");
+				}
+				break;
+			case "kitchen" :
+				goTo_hF(RoomPosition.DOOR_LAUNDRY_TO_KITCHEN, element);
+				if(humain.getPosition().equals(RoomPosition.DOOR_LAUNDRY_TO_KITCHEN)){
+					humain.setLocation("kitchen");
+				}
+				break;
+			case "bedroom" :
+				goTo_vF(RoomPosition.DOOR_LAUNDRY_TO_LIVING,element);
+				if(humain.getPosition().equals(RoomPosition.DOOR_LAUNDRY_TO_LIVING)){
+					humain.setLocation("living");
+				}
+				break;
+			case "living" :
+				goTo_vF(RoomPosition.DOOR_LAUNDRY_TO_LIVING,element);
+				if(humain.getPosition().equals(RoomPosition.DOOR_LAUNDRY_TO_LIVING)){
+					humain.setLocation("living");
+				}
+				break;
+			case "garden" :
+				goTo_vF(RoomPosition.DOOR_LAUNDRY_TO_LIVING,element);
+				if(humain.getPosition().equals(RoomPosition.DOOR_LAUNDRY_TO_LIVING)){
+					humain.setLocation("living");
+				}
+				break;
+			}
+			break;
+		case "kitchen" :
+			switch(humain.getTarget().getLocation()) {
+			case "bathroom" :
+				goTo_hF(RoomPosition.DOOR_KITCHEN_TO_LAUNDRY, element);
+				if(humain.getPosition().equals(RoomPosition.DOOR_KITCHEN_TO_LAUNDRY)){
+					humain.setLocation("laundry");
+				}
+				break;
+			case "laundry" :
+				goTo_hF(RoomPosition.DOOR_KITCHEN_TO_LAUNDRY, element);
+				if(humain.getPosition().equals(RoomPosition.DOOR_KITCHEN_TO_LAUNDRY)){
+					humain.setLocation("laundry");
+				}
+				break;
+			case "bedroom" :
+				goTo_vF(RoomPosition.DOOR_KITCHEN_TO_LIVING, element);
+				if(humain.getPosition().equals(RoomPosition.DOOR_KITCHEN_TO_LIVING)){
+					humain.setLocation("living");
+				}
+				break;
+			case "living" :
+				goTo_vF(RoomPosition.DOOR_KITCHEN_TO_LIVING, element);
+				if(humain.getPosition().equals(RoomPosition.DOOR_KITCHEN_TO_LIVING)){
+					humain.setLocation("living");
+				}
+				break;
+			case "garden" :
+				goTo_vF(RoomPosition.DOOR_KITCHEN_TO_LIVING, element);
+				if(humain.getPosition().equals(RoomPosition.DOOR_KITCHEN_TO_LIVING)){
+					humain.setLocation("living");
+				}
+				break;
+			}
+			break;
+		case "bedroom" :
+			switch(humain.getTarget().getLocation()) {
+			case "bathroom" :
+				goTo_vF(RoomPosition.DOOR_BEDROOM_TO_BATHROOM,element);
+				if(humain.getPosition().equals(RoomPosition.DOOR_BEDROOM_TO_BATHROOM)){
+					humain.setLocation("bathroom");
+				}
+				break;
+			case "laundry" :
+				goTo_hF(RoomPosition.DOOR_BEDROOM_TO_LIVING,element);
+				if(humain.getPosition().equals(RoomPosition.DOOR_BEDROOM_TO_LIVING)){
+					humain.setLocation("living");
+				}
+				break;
+			case "kitchen" :
+				goTo_hF(RoomPosition.DOOR_BEDROOM_TO_LIVING,element);
+				if(humain.getPosition().equals(RoomPosition.DOOR_BEDROOM_TO_LIVING)){
+					humain.setLocation("living");
+				}
+				break;
+			case "living" :
+				goTo_hF(RoomPosition.DOOR_BEDROOM_TO_LIVING,element);
+				if(humain.getPosition().equals(RoomPosition.DOOR_BEDROOM_TO_LIVING)){
+					humain.setLocation("living");
+				}
+				break;
+			case "garden" :
+				goTo_hF(RoomPosition.DOOR_BEDROOM_TO_LIVING,element);
+				if(humain.getPosition().equals(RoomPosition.DOOR_BEDROOM_TO_LIVING)){
+					humain.setLocation("living");
+				}
+				break;
+			}
+			break;
+		case "living" :
+			switch(humain.getTarget().getLocation()) {
+			case "bathroom" :
+				goTo_vF(RoomPosition.DOOR_LAUNDRY_TO_LIVING, element);
+				if(humain.getPosition().equals(RoomPosition.DOOR_BEDROOM_TO_LIVING)){
+					humain.setLocation("living");
+				}
+				break;
+			case "laundry" :
+				goTo_vF(RoomPosition.DOOR_LAUNDRY_TO_LIVING, element);
+				if(humain.getPosition().equals(RoomPosition.DOOR_LAUNDRY_TO_LIVING)){
+					humain.setLocation("living");
+				}
+				break;
+			case "kitchen" :
+				goTo_vF(RoomPosition.DOOR_LIVING_TO_KITCHEN,element);
+				if(humain.getPosition().equals(RoomPosition.DOOR_LAUNDRY_TO_LIVING)){
+					humain.setLocation("kitchen");
+				}
+				break;
+			case "bedroom" :
+				goTo_hF(RoomPosition.DOOR_LIVING_TO_BEDROOM,element);
+				if(humain.getPosition().equals(RoomPosition.DOOR_LIVING_TO_BEDROOM)){
+					humain.setLocation("bedroom");
+				}
+				break;
+			case "garden" :
+				goTo_vF(RoomPosition.DOOR_GARDEN_TO_LIVING,element);
+				if(humain.getPosition().equals(RoomPosition.DOOR_GARDEN_TO_LIVING)){
+					humain.setLocation("garden");
+				}
+				break;
+			}
+			break;
+		case "garden" :
+			switch(humain.getTarget().getLocation()) {
+			case "bathroom" :
+				goTo_vF(RoomPosition.DOOR_LIVING_TO_GARDEN,element);
+				if(humain.getPosition().equals(RoomPosition.DOOR_LIVING_TO_GARDEN)){
+					humain.setLocation("living");
+				}
+				break;
+			case "laundry" :
+				goTo_vF(RoomPosition.DOOR_LIVING_TO_GARDEN,element);
+				if(humain.getPosition().equals(RoomPosition.DOOR_LIVING_TO_GARDEN)){
+					humain.setLocation("living");
+				}
+				break;
+			case "kitchen" :
+				goTo_vF(RoomPosition.DOOR_LIVING_TO_GARDEN,element);
+				if(humain.getPosition().equals(RoomPosition.DOOR_LIVING_TO_GARDEN)){
+					humain.setLocation("living");
+				}
+				break;
+			case "bedroom" :
+				goTo_vF(RoomPosition.DOOR_LIVING_TO_GARDEN,element);
+				if(humain.getPosition().equals(RoomPosition.DOOR_LIVING_TO_GARDEN)){
+					humain.setLocation("living");
+				}
+				break;
+			case "living" :
+				goTo_vF(RoomPosition.DOOR_LIVING_TO_GARDEN,element);
+				if(humain.getPosition().equals(RoomPosition.DOOR_LIVING_TO_GARDEN)){
+					humain.setLocation("living");
+				}
+				break;
+			}
+			break;
+		}
+		}else{
+			// avec selon les pièces pour éviter les objet / mur ?
+	}
+	}
 
 	private void mettreAJourMetriquesApprentissage(Dog dog) {
 		dog.getLearning().degradationNaturelle(); // Dégrader les probabilités
