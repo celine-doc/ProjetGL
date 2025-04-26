@@ -4,72 +4,71 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Learning {
-    private Map<Action, Integer> scoresActions;  // Stocke un score des actions
+    private Map<Action, Integer> probasActions;  // Stocke les probabilités des actions (0 à 100)
     private Map<Action, Long> lastPerformed;  // Timestamp de la dernière exécution
-    private static final int MAX_SCORE = 50;  // Borne supérieure
-    private static final int MIN_SCORE = -50;  // Borne inférieure
-    private static final long DEGRADATION_INTERVAL = 5000;  // 5 secondes
+    private static final int MAX_PROBA = 100;  // Borne supérieure
+    private static final int MIN_PROBA = 0;   // Borne inférieure
+    private static final long DEGRADATION_INTERVAL = 30000;  // 30 secondes
 
     public Learning() {
-        this.scoresActions = new HashMap<>();
+        this.probasActions = new HashMap<>();
         this.lastPerformed = new HashMap<>();
     }
 
     private void initialiserAction(Action action) {
-        if (!scoresActions.containsKey(action)) {
-            scoresActions.put(action, 0);
+        if (!probasActions.containsKey(action)) {
+            // Initialiser avec la probabilité définie dans GameConfiguration
+            probasActions.put(action, action.getProba());
             lastPerformed.put(action, System.currentTimeMillis());
         }
     }
 
     public void ajouterRecompense(Action action) {
         initialiserAction(action);
-        int reward = 5;  // Récompense 
+        int reward = 5;  // Augmentation de la probabilité
         // Moduler en fonction de timeAction
         reward = (int) (reward * Math.min(1.0, action.getTimeAction() / 10.0));
-        int newScore = Math.min(MAX_SCORE, scoresActions.get(action) + reward);
-        scoresActions.put(action, newScore);
+        int newProba = Math.min(MAX_PROBA, probasActions.get(action) + reward);
+        probasActions.put(action, newProba);
         lastPerformed.put(action, System.currentTimeMillis());
-        System.out.println("Action récompensée : " + action + ", Score: " + newScore);
+        System.out.println("Action récompensée : " + action.getName() + ", Probabilité: " + newProba + "%");
     }
 
     public void ajouterPunition(Action action) {
         initialiserAction(action);
-        int punishment = 5;  // Punition 
+        int punishment = 5;  // Réduction de la probabilité
         // Moduler en fonction de timeAction
         punishment = (int) (punishment * Math.min(1.0, action.getTimeAction() / 10.0));
-        int newScore = Math.max(MIN_SCORE, scoresActions.get(action) - punishment);
-        scoresActions.put(action, newScore);
+        int newProba = Math.max(MIN_PROBA, probasActions.get(action) - punishment);
+        probasActions.put(action, newProba);
         lastPerformed.put(action, System.currentTimeMillis());
-        System.out.println("Action punie : " + action + ", Score: " + newScore);
+        System.out.println("Action punie : " + action.getName() + ", Probabilité: " + newProba + "%");
     }
 
     public void degradationNaturelle() {
         long currentTime = System.currentTimeMillis();
-        for (Action action : scoresActions.keySet()) {
+        for (Action action : probasActions.keySet()) {
             long lastTime = lastPerformed.getOrDefault(action, currentTime);
             if (currentTime - lastTime > DEGRADATION_INTERVAL) {
-                int currentScore = scoresActions.get(action);
-                if (currentScore > 0) {
-                    scoresActions.put(action, Math.max(0, currentScore - 2));  // Dégradation plus forte
-                } else if (currentScore < 0) {
-                    scoresActions.put(action, Math.min(0, currentScore + 2));  // Ramener vers 0
+                int currentProba = probasActions.get(action);
+                if (currentProba > action.getProba()) {
+                    probasActions.put(action, Math.max(action.getProba(), currentProba - 2));  // Ramener vers proba initiale
                 }
-                System.out.println("Dégradation pour " + action + ": " + scoresActions.get(action));
+                System.out.println("Dégradation pour " + action.getName() + ": " + probasActions.get(action) + "%");
             }
         }
     }
 
     public void afficherApprentissage() {
         System.out.println("\nÉtat de l'apprentissage :");
-        for (Action action : scoresActions.keySet()) {
-            System.out.println("  Action: " + action + ", Score: " + scoresActions.get(action) +
-                               ", Dernière exécution: " + lastPerformed.get(action));
+        for (Action action : probasActions.keySet()) {
+            System.out.println("  Action: " + action.getName() + ", Probabilité: " + probasActions.get(action) +
+                               "%, Dernière exécution: " + lastPerformed.get(action));
         }
     }
 
-    public int getScore(Action action) {
+    public int getProba(Action action) {
         initialiserAction(action);
-        return scoresActions.get(action);
+        return probasActions.get(action);
     }
 }
