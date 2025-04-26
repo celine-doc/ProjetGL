@@ -21,7 +21,12 @@ public class Dog extends Animal {
     public void dormirPanier() {
         Action action = GameConfiguration.listActionChien.get("dormirPanier");
         journal.writeTxt(action.getEcritJournal());
-        realiserAction(action, true);
+        // Introduire un taux d'échec aléatoire de 40% (augmenté de 20%)
+        boolean reussi = Math.random() > 0.4;
+        realiserAction(action, reussi);
+        if (!reussi) {
+            journal.writeTxt("J'ai essayé de dormir dans mon panier, mais je n'étais pas à l'aise.");
+        }
     }
 
     public void dormirNiche() {
