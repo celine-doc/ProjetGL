@@ -23,12 +23,14 @@ public class MobileElementManager{
 	private Map map;
 	private Dog dog;
 	private Cat cat;
+	private Father father;
 	private ChartManager chartManager;
 
 	public MobileElementManager(Map map) {
 		this.map = map;
 		//positions initiales 
 		dog = new Dog(new Block(GameConfiguration.DEFAULT_POSITION_DOG_X,GameConfiguration.DEFAULT_POSITION_DOG_Y), "bathroom");
+		father = new Father(new Block(5,5)); // Position arbitraire à modifier
 		GameConfiguration.initialisation();
 		chartManager = new ChartManager();
 	}
@@ -45,6 +47,15 @@ public class MobileElementManager{
 			mooveElement(dog);
 		}
 		mettreAJourMetriquesApprentissage(dog); // Enregistrer les données après chaque action
+		if(father.getActionAnimal()){
+			// Si true -> va vers l'animal en target
+			goToNewAction(father,new Action(dog.getLocation(),"targetDog",dog.getPosition(),0,"bagare",1);
+			mooveElement(father);
+		}else{
+			// Sinon continue de bouger aléatoirement ( possibilité de mettre en place changement de pièce avec goToNewAction
+			// father.action = "randomMoove";
+			mooveElement(father);
+		}
 	}
 	public Action selectedAction(Animal animal, int random) {
 		ArrayList<String> listNomAction = animal.getListNomAction();
@@ -57,7 +68,7 @@ public class MobileElementManager{
 		}
 		return null;
 	}
-
+	
 	public Dog getDog() {
 		return dog;
 	}
