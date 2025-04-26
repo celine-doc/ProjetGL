@@ -86,8 +86,8 @@ public abstract class Animal extends MobileElement {
         System.out.println("État mental: " + (int)(stateAnimal.getMentalState() * 100) + "%");
     }
 
-    public int getScore(Action action) {
-        return apprentissage.getScore(action);
+    public int getProba(Action action) {
+        return apprentissage.getProba(action);
     }
 
     public double getConfiance() {
