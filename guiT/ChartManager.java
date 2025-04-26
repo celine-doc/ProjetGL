@@ -119,6 +119,14 @@ public class ChartManager {
             true,
             false
         );
+     // Personnaliser l'axe Y
+        XYPlot plot = chart.getXYPlot();
+        NumberAxis rangeAxis = (NumberAxis) plot.getRangeAxis();
+        rangeAxis.setRange(0, 100); // Fixer la plage de 0 à 100
+        rangeAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits()); // Forcer des nombres entiers
+        rangeAxis.setAutoRangeIncludesZero(true); // S'assurer que 0 est inclus
+        rangeAxis.setLowerBound(0); // Pas de valeurs négatives
+        
         chart.getXYPlot().getRenderer().setSeriesPaint(0, java.awt.Color.BLUE);
         return chart;
     }
@@ -135,6 +143,14 @@ public class ChartManager {
             true,
             false
         );
+     // Personnaliser l'axe Y
+        XYPlot plot = chart.getXYPlot();
+        NumberAxis rangeAxis = (NumberAxis) plot.getRangeAxis();
+        rangeAxis.setRange(0, 100); // Fixer la plage de 0 à 100
+        rangeAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits()); // Forcer des nombres entiers
+        rangeAxis.setAutoRangeIncludesZero(true); // S'assurer que 0 est inclus
+        rangeAxis.setLowerBound(0); // Pas de valeurs négatives
+        
         chart.getXYPlot().getRenderer().setSeriesPaint(0, java.awt.Color.GREEN);
         return chart;
     }
@@ -151,6 +167,14 @@ public class ChartManager {
             true,
             false
         );
+     // Personnaliser l'axe Y
+        XYPlot plot = chart.getXYPlot();
+        NumberAxis rangeAxis = (NumberAxis) plot.getRangeAxis();
+        rangeAxis.setRange(0, 100); // Fixer la plage de 0 à 100
+        rangeAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits()); // Forcer des nombres entiers
+        rangeAxis.setAutoRangeIncludesZero(true); // S'assurer que 0 est inclus
+        rangeAxis.setLowerBound(0); // Pas de valeurs négatives
+        
         chart.getXYPlot().getRenderer().setSeriesPaint(0, java.awt.Color.ORANGE);
         return chart;
     }
