@@ -28,30 +28,35 @@ public abstract class Animal extends MobileElement {
     }
 
     private void ajusterConfiance(boolean reussi, Action action) {
-        double adjustment = reussi ? 0.05 : -0.05;  // Ajustements plus petits
+        double adjustment = reussi ? 0.01 : -0.01; // Réduit de 0.02 à 0.01
         confiance = Math.min(1.0, Math.max(0.0, confiance + adjustment));
-        System.out.println("Confiance actuelle: " + (int)(confiance * 100) + "%");
+        System.out.printf("Confiance actuelle: %.1f%%\n", confiance * 100);
     }
 
     private void ajusterEtatDeSante(boolean reussi, Action action) {
-        double adjustment = reussi ? 0.05 : -0.05;
-        // Moduler par timeAction et état actuel
+        double adjustment = reussi ? 0.01 : -0.01; // Réduit de 0.02 à 0.01
         adjustment *= Math.min(1.0, action.getTimeAction() / 10.0);
         if (stateAnimal.getphysicalState() < 0.3) {
-            adjustment *= 1.5;  // Effet amplifié si santé faible
+            adjustment *= 1.5;
         }
         stateAnimal.setphysicalState(Math.min(1.0, Math.max(0.0, stateAnimal.getphysicalState() + adjustment)));
-        System.out.println("État de santé actuel: " + (int)(stateAnimal.getphysicalState() * 100) + "%");
+        System.out.printf("État de santé actuel: %.1f%%\n", stateAnimal.getphysicalState() * 100);
     }
 
     private void ajusterEtatMental(boolean reussi, Action action) {
-        double adjustment = reussi ? 0.03 : -0.03;
+        double adjustment = reussi ? 0.008 : -0.008; // Réduit de 0.015 à 0.008
         adjustment *= Math.min(1.0, action.getTimeAction() / 10.0);
         if (stateAnimal.getMentalState() < 0.3) {
-            adjustment *= 1.5;  // Effet amplifié si état mental faible
+            adjustment *= 1.5;
         }
-        stateAnimal.setMentalState(Math.min(1.0, Math.max(0.0, stateAnimal.getMentalState() + adjustment)));
-        System.out.println("État mental actuel: " + (int)(stateAnimal.getMentalState() * 100) + "%");
+        stateAnimal.setMentalState(Math.min(1.0, Math.max (0.0, stateAnimal.getMentalState() + adjustment)));
+        System.out.printf("État mental actuel: %.1f%%\n", stateAnimal.getMentalState() * 100);
+    }
+
+    public void degradationNaturelleMetriques() {
+        confiance = Math.max(0.0, confiance - 0.005);
+        stateAnimal.setphysicalState(Math.max(0.0, stateAnimal.getphysicalState() - 0.005));
+        stateAnimal.setMentalState(Math.max(0.0, stateAnimal.getMentalState() - 0.005));
     }
 
     public void setListActionPossible(HashMap<String, Action> listActionPossible) {
@@ -81,9 +86,9 @@ public abstract class Animal extends MobileElement {
     public void afficherApprentissage() {
         System.out.println("\nÉtat actuel de l'apprentissage de l'animal:");
         apprentissage.afficherApprentissage();
-        System.out.println("Confiance générale: " + (int)(confiance * 100) + "%");
-        System.out.println("État de santé: " + (int)(stateAnimal.getphysicalState() * 100) + "%");
-        System.out.println("État mental: " + (int)(stateAnimal.getMentalState() * 100) + "%");
+        System.out.printf("Confiance générale: %.1f%%\n", confiance * 100);
+        System.out.printf("État de santé: %.1f%%\n", stateAnimal.getphysicalState() * 100);
+        System.out.printf("État mental: %.1f%%\n", stateAnimal.getMentalState() * 100);
     }
 
     public int getProba(Action action) {
