@@ -265,27 +265,23 @@ public class MobileElementManager {
 	int direction = directions[0];
             switch (direction) {
                 case 0:
-                    moveLeftElement(element);
-                    moveLeftElement(element);
+                    randomMoveLeftElement(element);
                     if (!element.getPosition().equals(tmp.getPosition())) return; // Vérifier si le déplacement a réussi
                     break;
                 case 1:
-                	moveRightElement(element);
-                	moveRightElement(element);
+                	randomMoveRightElement(element);
                     if (!element.getPosition().equals(tmp.getPosition())) return;
                     break;
                 case 2:
-                    moveUpElement(element);
-                    moveUpElement(element);
+                    randomMoveUpElement(element);
                     if (!element.getPosition().equals(tmp.getPosition())) return;
                     break;
                 case 3:
-                    moveDownElement(element);
-                    moveDownElement(element);
+                    randomMoveDownElement(element);
                     if (!element.getPosition().equals(tmp.getPosition())) return;
                     break;
             }
-        System.out.println("Aucun déplacement possible pour " + element.getClass().getSimpleName() + " à la position " + element.getPosition());
+        // System.out.println("Aucun déplacement possible pour " + element.getClass().getSimpleName() + " à la position " + element.getPosition());
     }
 
     private void horizontalDeplacement(Block destination, MobileElement element) {
