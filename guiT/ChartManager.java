@@ -22,31 +22,31 @@ public class ChartManager {
     private TimeSeries mentalStateSeries = new TimeSeries("État mental");
     private TimeSeries physicalStateSeries = new TimeSeries("État physique");
     private HashMap<String, TimeSeries> actionSeries = new HashMap<>();
+    private int stepCounter = 0; // Compteur d'étapes pour les TimeSeries
 
     public ChartManager() {
         for (String actionName : GameConfiguration.listNomActionChien) {
             actionProbas.put(actionName, new ArrayList<>());
-            // Initialiser avec la probabilité initiale de l'action
             int initialProba = GameConfiguration.listActionChien.get(actionName).getProba();
             actionProbas.get(actionName).add(initialProba);
             actionSeries.put(actionName, new TimeSeries(formaterNomAction(actionName)));
-            actionSeries.get(actionName).add(new Second(), initialProba); // Probabilité initiale
+            actionSeries.get(actionName).add(new Second(), initialProba);
         }
         trustLevels.add(0.5);
         mentalStates.add(0.5);
         physicalStates.add(0.5);
-        trustSeries.add(new Second(), 0.5); // Valeur initiale
+        trustSeries.add(new Second(), 0.5);
         mentalStateSeries.add(new Second(), 0.5);
         physicalStateSeries.add(new Second(), 0.5);
     }
 
     public synchronized void registerActionScores(Dog dog) {
-        Second currentTime = new Second();
+        int currentStep = stepCounter++;
         for (String actionName : GameConfiguration.listNomActionChien) {
             Integer proba = dog.getProba(GameConfiguration.listActionChien.get(actionName));
             if (proba != null && proba >= 0 && proba <= 100) {
                 actionProbas.get(actionName).add(proba);
-                actionSeries.get(actionName).addOrUpdate(currentTime, proba);
+                actionSeries.get(actionName).addOrUpdate(new Second(), proba);
                 System.out.println("Probabilité enregistrée pour " + actionName + ": " + proba + "%");
             } else {
                 System.out.println("Probabilité invalide pour " + actionName + ": " + proba + ", ignorée.");
@@ -96,13 +96,12 @@ public class ChartManager {
             true,
             false
         );
-        // Personnaliser l'axe Y
         XYPlot plot = chart.getXYPlot();
         NumberAxis rangeAxis = (NumberAxis) plot.getRangeAxis();
-        rangeAxis.setRange(0, 100); // Fixer la plage de 0 à 100
-        rangeAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits()); // Forcer des nombres entiers
-        rangeAxis.setAutoRangeIncludesZero(true); // S'assurer que 0 est inclus
-        rangeAxis.setLowerBound(0); // Pas de valeurs négatives
+        rangeAxis.setRange(0, 100);
+        rangeAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
+        rangeAxis.setAutoRangeIncludesZero(true);
+        rangeAxis.setLowerBound(0);
         plot.getRenderer().setSeriesPaint(0, obtenirCouleurPourAction(actionName));
         return chart;
     }
@@ -119,14 +118,11 @@ public class ChartManager {
             true,
             false
         );
-     // Personnaliser l'axe Y
         XYPlot plot = chart.getXYPlot();
         NumberAxis rangeAxis = (NumberAxis) plot.getRangeAxis();
-        rangeAxis.setRange(0, 100); // Fixer la plage de 0 à 100
-        rangeAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits()); // Forcer des nombres entiers
-        rangeAxis.setAutoRangeIncludesZero(true); // S'assurer que 0 est inclus
-        rangeAxis.setLowerBound(0); // Pas de valeurs négatives
-        
+        rangeAxis.setRange(0, 1);
+        rangeAxis.setAutoRangeIncludesZero(true);
+        rangeAxis.setLowerBound(0);
         chart.getXYPlot().getRenderer().setSeriesPaint(0, java.awt.Color.BLUE);
         return chart;
     }
@@ -143,14 +139,11 @@ public class ChartManager {
             true,
             false
         );
-     // Personnaliser l'axe Y
         XYPlot plot = chart.getXYPlot();
         NumberAxis rangeAxis = (NumberAxis) plot.getRangeAxis();
-        rangeAxis.setRange(0, 100); // Fixer la plage de 0 à 100
-        rangeAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits()); // Forcer des nombres entiers
-        rangeAxis.setAutoRangeIncludesZero(true); // S'assurer que 0 est inclus
-        rangeAxis.setLowerBound(0); // Pas de valeurs négatives
-        
+        rangeAxis.setRange(0, 1);
+        rangeAxis.setAutoRangeIncludesZero(true);
+        rangeAxis.setLowerBound(0);
         chart.getXYPlot().getRenderer().setSeriesPaint(0, java.awt.Color.GREEN);
         return chart;
     }
@@ -167,14 +160,11 @@ public class ChartManager {
             true,
             false
         );
-     // Personnaliser l'axe Y
         XYPlot plot = chart.getXYPlot();
         NumberAxis rangeAxis = (NumberAxis) plot.getRangeAxis();
-        rangeAxis.setRange(0, 100); // Fixer la plage de 0 à 100
-        rangeAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits()); // Forcer des nombres entiers
-        rangeAxis.setAutoRangeIncludesZero(true); // S'assurer que 0 est inclus
-        rangeAxis.setLowerBound(0); // Pas de valeurs négatives
-        
+        rangeAxis.setRange(0, 1);
+        rangeAxis.setAutoRangeIncludesZero(true);
+        rangeAxis.setLowerBound(0);
         chart.getXYPlot().getRenderer().setSeriesPaint(0, java.awt.Color.ORANGE);
         return chart;
     }
