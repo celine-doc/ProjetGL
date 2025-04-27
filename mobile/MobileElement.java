@@ -9,8 +9,17 @@ public class MobileElement {
     protected String location;
     protected int actionTime;
     protected long actionStartTime; // Temps de début de l'action
+    private int sizeImage;
 
-    public String getAction() {
+    public int getSizeImage() {
+		return sizeImage;
+	}
+
+	public void setSizeImage(int sizeImage) {
+		this.sizeImage = sizeImage;
+	}
+
+	public String getAction() {
         if (listAction.isEmpty()) {
             return null;
         }
