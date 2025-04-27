@@ -657,11 +657,15 @@ public class MobileElementManager {
                     if (element.getActionTime() == 0) {
                         dog.interagir("dormirPanier");
                         element.setActionTime(element.getActionTime() + 1);
+                        System.out.println(element.getActionTime() + ":: 1 / interagir");
                     } else {
+                        System.out.println(element.getActionTime() + " :: 1 / else");
                         if (element.getActionTime() >= GameConfiguration.listActionChien.get(action).getTimeAction()) {
+                            System.out.println(element.getActionTime() + " else-if, fin");
                             element.supFirstAction();
                             element.setActionTime(0);
                         } else {
+                            System.out.println(element.getActionTime() + ":: 1 / else-else");
                             element.setActionTime(element.getActionTime() + 1);
                         }
                     }
