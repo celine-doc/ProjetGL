@@ -20,7 +20,7 @@ import mobile.MobileElement;
 public class MobileElementManager {
     private Map map;
     private Dog dog;
-    //private Cat cat;
+    private Cat cat;
     private Father father;
     private ChartManager chartManager;
     private GraphiquesApprentissageGUI gui;
@@ -29,37 +29,59 @@ public class MobileElementManager {
         this.map = map;
         dog = new Dog(new Block(GameConfiguration.DEFAULT_POSITION_DOG_X, GameConfiguration.DEFAULT_POSITION_DOG_Y), "bathroom");
         father = new Father(new Block(5, 5));
+        
         GameConfiguration.initialisation();
         chartManager = new ChartManager();
         this.gui = gui;
     }
-
+    public Cat getCat() {
+		return cat;
+	}
     public Father getFather() {
         return father;
     }
 
-    public void action(int random) {
-        System.out.println(random);
-        if (dog.dontHaveAction()) {
-            Action act = selectedAction(dog, random);
-            if (act != null) {
-            	System.err.println(act.getName());
-                goToNewAction(dog, act);
-            } else {
-                dog.addAction("randomMoove");
-            }
-        } else {
-            mooveElement(dog);
-        }
-        mettreAJourMetriquesApprentissage(dog); //  enregistrer les métriques
-        gui.mettreAJourGrapheAction(); // Rafraîchir le graphique
-        
-        if (father.getActionAnimal()) {
-            targeting(father);
-        } else {
-            mooveElement(father);
-        }
-    }
+    public void action() {
+		int randomDog = (int)((Math.random())*100);// Une valeur aléatoire chacun pour pas qu'il fasse la même chose tt le temps
+		int randomCat = (int)((Math.random())*100);
+		
+		if (dog.dontHaveAction()) { // Le chien bouge
+			Action act = selectedAction(dog, randomDog);
+			if (act != null) {
+				System.err.println(act.getName());
+				goToNewAction(dog, act);
+			} else {
+				dog.addAction("randomMoove");
+			}
+		} else {
+			mooveElement(dog);
+		}
+		
+		if (cat.dontHaveAction()) { // Le chat bouge
+			Action act = selectedAction(cat, randomCat);
+			if (act != null) {
+				System.err.println(act.getName());
+				goToNewAction(cat, act);
+			} else {
+				cat.addAction("randomMoove");
+			}
+		} else {
+			mooveElement(cat);
+		}
+		
+		
+		
+		if (father.getActionAnimal()) { // Le père bouge
+			targeting(father);
+		} else {
+			mooveElement(father);
+		}
+
+
+		// Les stats sont mis à jour
+		mettreAJourMetriquesApprentissage(dog); //  enregistrer les métriques
+		gui.mettreAJourGrapheAction(); // Rafraîchir le graphique
+	}
 
     public Action selectedAction(Animal animal, int random) {
         ArrayList<String> listNomAction = animal.getListNomAction();
