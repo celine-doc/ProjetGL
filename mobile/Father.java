@@ -1,5 +1,6 @@
 package mobile;
 
+import config.GameConfiguration;
 import map.Block;
 
 public class Father extends MobileElement {
@@ -13,6 +14,7 @@ public class Father extends MobileElement {
 		this.actionAnimal = false; // A mettre dans une classe individu intermédaire
 		this.target = null; // A mettre dans une classe individu intermédaire
 		addAction("randomMoove"); // Initialisation à un mouvement aléatoire
+		setSizeImage(GameConfiguration.FatherSize);
 	}
 
 	//// A mettre dans une classe individu intermédaire : 
