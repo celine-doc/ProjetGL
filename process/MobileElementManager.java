@@ -656,6 +656,7 @@ public class MobileElementManager {
                 if (element.getPosition().equals(RoomPosition.PANIER_CHIEN)) {
                     if (element.getActionTime() == 0) {
                         dog.interagir("dormirPanier");
+                        element.setActionTime(element.getActionTime() + 1);
                     } else {
                         if (element.getActionTime() >= GameConfiguration.listActionChien.get(action).getTimeAction()) {
                             element.supFirstAction();
@@ -671,6 +672,7 @@ public class MobileElementManager {
                 if (element.getPosition().equals(RoomPosition.NICHE)) {
                     if (element.getActionTime() == 0) {
                         dog.interagir("dormirNiche");
+                        element.setActionTime(element.getActionTime() + 1);
                     } else {
                         if (element.getActionTime() >= GameConfiguration.listActionChien.get(action).getTimeAction()) {
                             element.supFirstAction();
@@ -686,6 +688,7 @@ public class MobileElementManager {
                 if (element.getPosition().equals(RoomPosition.LIT)) {
                     if (element.getActionTime() == 0) {
                         dog.interagir("dormirLit");
+                        element.setActionTime(element.getActionTime() + 1);
                     } else {
                         if (element.getActionTime() >= GameConfiguration.listActionChien.get(action).getTimeAction()) {
                             element.supFirstAction();
@@ -701,6 +704,7 @@ public class MobileElementManager {
                 if (element.getPosition().equals(RoomPosition.CANAPE)) {
                     if (element.getActionTime() == 0) {
                         dog.interagir("dormirCanape");
+                        element.setActionTime(element.getActionTime() + 1);
                     } else {
                         if (element.getActionTime() >= GameConfiguration.listActionChien.get(action).getTimeAction()) {
                             element.supFirstAction();
@@ -716,6 +720,7 @@ public class MobileElementManager {
                 if (element.getPosition().equals(RoomPosition.GAMELLE)) {
                     if (element.getActionTime() == 0) {
                         dog.interagir("mangerGamelle");
+                        element.setActionTime(element.getActionTime() + 1);
                     } else {
                         if (element.getActionTime() >= GameConfiguration.listActionChien.get(action).getTimeAction()) {
                             element.supFirstAction();
@@ -731,6 +736,7 @@ public class MobileElementManager {
                 if (element.getPosition().equals(RoomPosition.GAMELLE2)) {
                     if (element.getActionTime() == 0) {
                         dog.interagir("mangerGamelle2");
+                        element.setActionTime(element.getActionTime() + 1);
                     } else {
                         if (element.getActionTime() >= GameConfiguration.listActionChien.get(action).getTimeAction()) {
                             element.supFirstAction();
@@ -746,6 +752,7 @@ public class MobileElementManager {
                 if (element.getPosition().equals(RoomPosition.TABLE_A_MANGER)) {
                     if (element.getActionTime() == 0) {
                         dog.interagir("monterTable");
+                        element.setActionTime(element.getActionTime() + 1);
                     } else {
                         if (element.getActionTime() >= GameConfiguration.listActionChien.get(action).getTimeAction()) {
                             element.supFirstAction();
