@@ -49,10 +49,9 @@ public class MobileElementManager{
 		mettreAJourMetriquesApprentissage(dog); // Enregistrer les données après chaque action
 		if(father.getActionAnimal()){
 			// Si true -> va vers l'animal en target 
-			targeting(father);// méthode targeting pour les humains avec différent calcul que mooveElement
+			targeting(father);// méthode targeting pour les humains avec différent calcul que mooveElement pour aller dans la même pièce que l'animal. 
 		}else{
-			// Sinon continue de bouger aléatoirement ( possibilité de mettre en place changement de pièce avec goToNewAction
-			// father.action = "randomMoove";
+			// Sinon continue de bouger aléatoirement ( possibilité de mettre en place changement de pièce a voir ). 
 			mooveElement(father);
 		}
 	}
@@ -835,6 +834,11 @@ public class MobileElementManager{
 		}else{
 			// avec selon les pièces pour éviter les objet / mur ? 
 			// Action R/P lorsqu'il est dans la même pièce
+			// ---------
+
+			// A mettre à la fin une fois que P/R à été fait. 
+			father.setActionAnimal(false); // Fin d'une action lié à un animal
+			father.setTarget(null); // Voir si ça marche sinon on laisse c pas grave. 
 	}
 	}
 
