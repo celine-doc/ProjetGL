@@ -12,7 +12,7 @@ import guiT.GraphiquesApprentissageGUI;
 import map.Block;
 import map.Map;
 import mobile.Animal;
-//import mobile.Cat;
+import mobile.Cat;
 import mobile.Dog;
 import mobile.Father;
 import mobile.MobileElement;
@@ -28,6 +28,7 @@ public class MobileElementManager {
     public MobileElementManager(Map map, GraphiquesApprentissageGUI gui) {
         this.map = map;
         dog = new Dog(new Block(GameConfiguration.DEFAULT_POSITION_DOG_X, GameConfiguration.DEFAULT_POSITION_DOG_Y), "bathroom");
+	cat = new Cat(new Block(GameConfiguration.DEFAULT_POSITION_CAT_X, GameConfiguration.DEFAULT_POSITION_CAT_Y), "bedroom");
         father = new Father(new Block(5, 5));
         
         GameConfiguration.initialisation();
