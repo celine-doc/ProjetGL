@@ -11,11 +11,6 @@ public class MobileElement {
     protected long actionStartTime; // Temps de début de l'action
     private int sizeImage;
 
-	public void supAllAction() {
-    	while(!dontHaveAction()) {
-    		supFirstAction();
-    	}
-    }
     public int getSizeImage() {
 		return sizeImage;
 	}
@@ -40,6 +35,11 @@ public class MobileElement {
         actionStartTime = System.currentTimeMillis(); // Enregistrer le temps de début
     }
 
+    public void supAllAction() {
+    	while(!dontHaveAction()) {
+    		supFirstAction();
+    	}
+    }
     public void supFirstAction() {
         if (!listAction.isEmpty()) {
             listAction.remove(0);
