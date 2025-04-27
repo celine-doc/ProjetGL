@@ -88,6 +88,38 @@ public class Dog extends Animal {
             case "monterTable":
                 monterTable();
                 break;
+            case "punir":
+                // Punition : affecter l'action actuelle (si présente) et les métriques
+                if (getAction() != null && !getAction().isEmpty()) {
+                    Action currentAction = GameConfiguration.listActionChien.get(getAction());
+                    if (currentAction != null) {
+                        realiserAction(currentAction, false); // Réduire la probabilité
+                    }
+                } else {
+                    // Appliquer un ajustement négatif sans action spécifique
+                    ajusterConfiance(false, null);
+                    ajusterEtatDeSante(false, null);
+                    ajusterEtatMental(false, null);
+                }
+                journal.writeTxt("J'ai été puni ! Je me sens moins confiant.");
+                System.out.println("Chien puni : confiance = " + (getConfiance() * 100) + "%, état mental = " + (getMentalState() * 100) + "%");
+                break;
+            case "recompenser":
+                // Récompense : affecter l'action actuelle (si présente) et les métriques
+                if (getAction() != null && !getAction().isEmpty()) {
+                    Action currentAction = GameConfiguration.listActionChien.get(getAction());
+                    if (currentAction != null) {
+                        realiserAction(currentAction, true); // Augmenter la probabilité
+                    }
+                } else {
+                    // Appliquer un ajustement positif sans action spécifique
+                    ajusterConfiance(true, null);
+                    ajusterEtatDeSante(true, null);
+                    ajusterEtatMental(true, null);
+                }
+                journal.writeTxt("J'ai été récompensé ! Je me sens plus confiant.");
+                System.out.println("Chien récompensé : confiance = " + (getConfiance() * 100) + "%, état mental = " + (getMentalState() * 100) + "%");
+                break;
             default:
                 journal.writeTxt("Action inconnue: " + action);
                 break;
