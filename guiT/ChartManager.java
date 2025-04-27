@@ -11,82 +11,161 @@ import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
 import config.GameConfiguration;
 import mobile.Dog;
+import mobile.Cat;
 
 public class ChartManager {
-    private HashMap<String, ArrayList<Integer>> actionProbas = new HashMap<>();
-    private ArrayList<Double> trustLevels = new ArrayList<>();
-    private ArrayList<Double> mentalStates = new ArrayList<>();
-    private ArrayList<Double> physicalStates = new ArrayList<>();
+    private HashMap<String, ArrayList<Integer>> actionProbasDog = new HashMap<>();
+    private HashMap<String, ArrayList<Integer>> actionProbasCat = new HashMap<>();
+    private ArrayList<Double> trustLevelsDog = new ArrayList<>();
+    private ArrayList<Double> mentalStatesDog = new ArrayList<>();
+    private ArrayList<Double> physicalStatesDog = new ArrayList<>();
+    private ArrayList<Double> trustLevelsCat = new ArrayList<>();
+    private ArrayList<Double> mentalStatesCat = new ArrayList<>();
+    private ArrayList<Double> physicalStatesCat = new ArrayList<>();
     
-    private TimeSeries trustSeries = new TimeSeries("Confiance");
-    private TimeSeries mentalStateSeries = new TimeSeries("État mental");
-    private TimeSeries physicalStateSeries = new TimeSeries("État physique");
-    private HashMap<String, TimeSeries> actionSeries = new HashMap<>();
-    private int stepCounter = 0; // Compteur d'étapes pour les TimeSeries
+    private TimeSeries trustSeriesDog = new TimeSeries("Confiance Chien");
+    private TimeSeries mentalStateSeriesDog = new TimeSeries("État mental Chien");
+    private TimeSeries physicalStateSeriesDog = new TimeSeries("État physique Chien");
+    private TimeSeries trustSeriesCat = new TimeSeries("Confiance Chat");
+    private TimeSeries mentalStateSeriesCat = new TimeSeries("État mental Chat");
+    private TimeSeries physicalStateSeriesCat = new TimeSeries("État physique Chat");
+    private HashMap<String, TimeSeries> actionSeriesDog = new HashMap<>();
+    private HashMap<String, TimeSeries> actionSeriesCat = new HashMap<>();
+    private int stepCounter = 0;
 
     public ChartManager() {
+        // Initialize for Dog
         for (String actionName : GameConfiguration.listNomActionChien) {
-            actionProbas.put(actionName, new ArrayList<>());
+            actionProbasDog.put(actionName, new ArrayList<>());
             int initialProba = GameConfiguration.listActionChien.get(actionName).getProba();
-            actionProbas.get(actionName).add(initialProba);
-            actionSeries.put(actionName, new TimeSeries(formaterNomAction(actionName)));
-            actionSeries.get(actionName).add(new Second(), initialProba);
+            actionProbasDog.get(actionName).add(initialProba);
+            actionSeriesDog.put(actionName, new TimeSeries(formaterNomAction(actionName) + " (Chien)"));
+            actionSeriesDog.get(actionName).add(new Second(), initialProba);
         }
-        trustLevels.add(0.5);
-        mentalStates.add(0.5);
-        physicalStates.add(0.5);
-        trustSeries.add(new Second(), 0.5);
-        mentalStateSeries.add(new Second(), 0.5);
-        physicalStateSeries.add(new Second(), 0.5);
+        trustLevelsDog.add(0.5);
+        mentalStatesDog.add(0.5);
+        physicalStatesDog.add(0.5);
+        trustSeriesDog.add(new Second(), 0.5);
+        mentalStateSeriesDog.add(new Second(), 0.5);
+        physicalStateSeriesDog.add(new Second(), 0.5);
+
+        // Initialize for Cat
+        for (String actionName : GameConfiguration.listNomActionChat) {
+            actionProbasCat.put(actionName, new ArrayList<>());
+            int initialProba = GameConfiguration.listActionChat.get(actionName).getProba();
+            actionProbasCat.get(actionName).add(initialProba);
+            actionSeriesCat.put(actionName, new TimeSeries(formaterNomAction(actionName) + " (Chat)"));
+            actionSeriesCat.get(actionName).add(new Second(), initialProba);
+        }
+        trustLevelsCat.add(0.5);
+        mentalStatesCat.add(0.5);
+        physicalStatesCat.add(0.5);
+        trustSeriesCat.add(new Second(), 0.5);
+        mentalStateSeriesCat.add(new Second(), 0.5);
+        physicalStateSeriesCat.add(new Second(), 0.5);
     }
 
-    public synchronized void registerActionScores(Dog dog) {
+    public synchronized void registerActionScores(Dog dog, Cat cat) {
         int currentStep = stepCounter++;
+        // Register Dog actions
         for (String actionName : GameConfiguration.listNomActionChien) {
             Integer proba = dog.getProba(GameConfiguration.listActionChien.get(actionName));
             if (proba != null && proba >= 0 && proba <= 100) {
-                actionProbas.get(actionName).add(proba);
-                actionSeries.get(actionName).addOrUpdate(new Second(), proba);
-                System.out.println("Probabilité enregistrée pour " + actionName + ": " + proba + "%");
+                actionProbasDog.get(actionName).add(proba);
+                actionSeriesDog.get(actionName).addOrUpdate(new Second(), proba);
+                System.out.println("Probabilité enregistrée pour Chien " + actionName + ": " + proba + "%");
             } else {
-                System.out.println("Probabilité invalide pour " + actionName + ": " + proba + ", ignorée.");
+                System.out.println("Probabilité invalide pour Chien " + actionName + ": " + proba + ", ignorée.");
+            }
+        }
+        // Register Cat actions
+        for (String actionName : GameConfiguration.listNomActionChat) {
+            Integer proba = cat.getProba(GameConfiguration.listActionChat.get(actionName));
+            if (proba != null && proba >= 0 && proba <= 100) {
+                actionProbasCat.get(actionName).add(proba);
+                actionSeriesCat.get(actionName).addOrUpdate(new Second(), proba);
+                System.out.println("Probabilité enregistrée pour Chat " + actionName + ": " + proba + "%");
+            } else {
+                System.out.println("Probabilité invalide pour Chat " + actionName + ": " + proba + ", ignorée.");
             }
         }
     }
 
-    public synchronized void registerTrustByStep(Double trust) {
-        if (trust != null && trust >= 0 && trust <= 1) {
-            trustLevels.add(trust);
-            trustSeries.addOrUpdate(new Second(), trust);
-            System.out.println("Confiance enregistrée: " + trust);
+    public synchronized void registerTrustByStep(Dog dog, Cat cat) {
+        Double trustDog = dog.getConfiance();
+        Double trustCat = cat.getConfiance();
+        if (trustDog != null && trustDog >= 0 && trustDog <= 1) {
+            trustLevelsDog.add(trustDog);
+            trustSeriesDog.addOrUpdate(new Second(), trustDog);
+            System.out.println("Confiance enregistrée pour Chien: " + trustDog);
         } else {
-            System.out.println("Confiance invalide: " + trust + ", ignorée.");
+            System.out.println("Confiance invalide pour Chien: " + trustDog + ", ignorée.");
+        }
+        if (trustCat != null && trustCat >= 0 && trustCat <= 1) {
+            trustLevelsCat.add(trustCat);
+            trustSeriesCat.addOrUpdate(new Second(), trustCat);
+            System.out.println("Confiance enregistrée pour Chat: " + trustCat);
+        } else {
+            System.out.println("Confiance invalide pour Chat: " + trustCat + ", ignorée.");
         }
     }
 
-    public synchronized void registerMentalStateByStep(Double mentalState) {
-        if (mentalState != null && mentalState >= 0 && mentalState <= 1) {
-            mentalStates.add(mentalState);
-            mentalStateSeries.addOrUpdate(new Second(), mentalState);
-            System.out.println("État mental enregistré: " + mentalState);
+    public synchronized void registerMentalStateByStep(Dog dog, Cat cat) {
+        Double mentalStateDog = dog.getMentalState();
+        Double mentalStateCat = cat.getMentalState();
+        if (mentalStateDog != null && mentalStateDog >= 0 && mentalStateDog <= 1) {
+            mentalStatesDog.add(mentalStateDog);
+            mentalStateSeriesDog.addOrUpdate(new Second(), mentalStateDog);
+            System.out.println("État mental enregistré pour Chien: " + mentalStateDog);
         } else {
-            System.out.println("État mental invalide: " + mentalState + ", ignorée.");
+            System.out.println("État mental invalide pour Chien: " + mentalStateDog + ", ignorée.");
+        }
+        if (mentalStateCat != null && mentalStateCat >= 0 && mentalStateCat <= 1) {
+            mentalStatesCat.add(mentalStateCat);
+            mentalStateSeriesCat.addOrUpdate(new Second(), mentalStateCat);
+            System.out.println("État mental enregistré pour Chat: " + mentalStateCat);
+        } else {
+            System.out.println("État mental invalide pour Chat: " + mentalStateCat + ", ignorée.");
         }
     }
 
-    public synchronized void registerPhysicalStateByStep(Double physicalState) {
-        if (physicalState != null && physicalState >= 0 && physicalState <= 1) {
-            physicalStates.add(physicalState);
-            physicalStateSeries.addOrUpdate(new Second(), physicalState);
-            System.out.println("État physique enregistré: " + physicalState);
+    public synchronized void registerPhysicalStateByStep(Dog dog, Cat cat) {
+        Double physicalStateDog = dog.getPhysicalState();
+        Double physicalStateCat = cat.getPhysicalState();
+        if (physicalStateDog != null && physicalStateDog >= 0 && physicalStateDog <= 1) {
+            physicalStatesDog.add(physicalStateDog);
+            physicalStateSeriesDog.addOrUpdate(new Second(), physicalStateDog);
+            System.out.println("État physique enregistré pour Chien: " + physicalStateDog);
         } else {
-            System.out.println("État physique invalide: " + physicalState + ", ignorée.");
+            System.out.println("État physique invalide pour Chien: " + physicalStateDog + ", ignorée.");
+        }
+        if (physicalStateCat != null && physicalStateCat >= 0 && physicalStateCat <= 1) {
+            physicalStatesCat.add(physicalStateCat);
+            physicalStateSeriesCat.addOrUpdate(new Second(), physicalStateCat);
+            System.out.println("État physique enregistré pour Chat: " + physicalStateCat);
+        } else {
+            System.out.println("État physique invalide pour Chat: " + physicalStateCat + ", ignorée.");
         }
     }
 
     public JFreeChart getActionEvolutionChart(String actionName) {
         TimeSeriesCollection dataset = new TimeSeriesCollection();
-        dataset.addSeries(actionSeries.get(actionName));
+        boolean isDogAction = actionSeriesDog.containsKey(actionName);
+        boolean isCatAction = actionSeriesCat.containsKey(actionName);
+
+        if (actionName.equals("dormirNiche")) {
+            dataset.addSeries(actionSeriesDog.get(actionName));
+        } else if (actionName.equals("jouerArbreAChat")) {
+            dataset.addSeries(actionSeriesCat.get(actionName));
+        } else {
+            if (isDogAction) {
+                dataset.addSeries(actionSeriesDog.get(actionName));
+            }
+            if (isCatAction) {
+                dataset.addSeries(actionSeriesCat.get(actionName));
+            }
+        }
+
         JFreeChart chart = ChartFactory.createTimeSeriesChart(
             "Évolution de " + formaterNomAction(actionName),
             "Temps",
@@ -102,13 +181,29 @@ public class ChartManager {
         rangeAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
         rangeAxis.setAutoRangeIncludesZero(true);
         rangeAxis.setLowerBound(0);
-        plot.getRenderer().setSeriesPaint(0, obtenirCouleurPourAction(actionName));
+
+        // Set colors: Dog (Red), Cat (Blue)
+        int seriesIndex = 0;
+        if (actionName.equals("dormirNiche")) {
+            plot.getRenderer().setSeriesPaint(seriesIndex, java.awt.Color.RED);
+        } else if (actionName.equals("jouerArbreAChat")) {
+            plot.getRenderer().setSeriesPaint(seriesIndex, java.awt.Color.BLUE);
+        } else {
+            if (isDogAction) {
+                plot.getRenderer().setSeriesPaint(seriesIndex++, java.awt.Color.RED);
+            }
+            if (isCatAction) {
+                plot.getRenderer().setSeriesPaint(seriesIndex, java.awt.Color.BLUE);
+            }
+        }
+
         return chart;
     }
 
     public JFreeChart getTrustEvolutionChart() {
         TimeSeriesCollection dataset = new TimeSeriesCollection();
-        dataset.addSeries(trustSeries);
+        dataset.addSeries(trustSeriesDog);
+        dataset.addSeries(trustSeriesCat);
         JFreeChart chart = ChartFactory.createTimeSeriesChart(
             "Évolution de la confiance",
             "Temps",
@@ -123,13 +218,15 @@ public class ChartManager {
         rangeAxis.setRange(0, 1);
         rangeAxis.setAutoRangeIncludesZero(true);
         rangeAxis.setLowerBound(0);
-        chart.getXYPlot().getRenderer().setSeriesPaint(0, java.awt.Color.BLUE);
+        plot.getRenderer().setSeriesPaint(0, java.awt.Color.RED); // Dog
+        plot.getRenderer().setSeriesPaint(1, java.awt.Color.BLUE); // Cat
         return chart;
     }
 
     public JFreeChart getMentalStateEvolutionChart() {
         TimeSeriesCollection dataset = new TimeSeriesCollection();
-        dataset.addSeries(mentalStateSeries);
+        dataset.addSeries(mentalStateSeriesDog);
+        dataset.addSeries(mentalStateSeriesCat);
         JFreeChart chart = ChartFactory.createTimeSeriesChart(
             "Évolution de l'état mental",
             "Temps",
@@ -144,13 +241,15 @@ public class ChartManager {
         rangeAxis.setRange(0, 1);
         rangeAxis.setAutoRangeIncludesZero(true);
         rangeAxis.setLowerBound(0);
-        chart.getXYPlot().getRenderer().setSeriesPaint(0, java.awt.Color.GREEN);
+        plot.getRenderer().setSeriesPaint(0, java.awt.Color.RED); // Dog
+        plot.getRenderer().setSeriesPaint(1, java.awt.Color.BLUE); // Cat
         return chart;
     }
 
     public JFreeChart getPhysicalStateEvolutionChart() {
         TimeSeriesCollection dataset = new TimeSeriesCollection();
-        dataset.addSeries(physicalStateSeries);
+        dataset.addSeries(physicalStateSeriesDog);
+        dataset.addSeries(physicalStateSeriesCat);
         JFreeChart chart = ChartFactory.createTimeSeriesChart(
             "Évolution de l'état physique",
             "Temps",
@@ -165,24 +264,38 @@ public class ChartManager {
         rangeAxis.setRange(0, 1);
         rangeAxis.setAutoRangeIncludesZero(true);
         rangeAxis.setLowerBound(0);
-        chart.getXYPlot().getRenderer().setSeriesPaint(0, java.awt.Color.ORANGE);
+        plot.getRenderer().setSeriesPaint(0, java.awt.Color.RED); // Dog
+        plot.getRenderer().setSeriesPaint(1, java.awt.Color.BLUE); // Cat
         return chart;
     }
 
-    public TimeSeries getTrustSeries() {
-        return trustSeries;
+    public TimeSeries getTrustSeriesDog() {
+        return trustSeriesDog;
     }
 
-    public TimeSeries getMentalStateSeries() {
-        return mentalStateSeries;
+    public TimeSeries getMentalStateSeriesDog() {
+        return mentalStateSeriesDog;
     }
 
-    public TimeSeries getPhysicalStateSeries() {
-        return physicalStateSeries;
+    public TimeSeries getPhysicalStateSeriesDog() {
+        return physicalStateSeriesDog;
+    }
+
+    public TimeSeries getTrustSeriesCat() {
+        return trustSeriesCat;
+    }
+
+    public TimeSeries getMentalStateSeriesCat() {
+        return mentalStateSeriesCat;
+    }
+
+    public TimeSeries getPhysicalStateSeriesCat() {
+        return physicalStateSeriesCat;
     }
 
     public TimeSeries getActionSeries(String actionName) {
-        return actionSeries.get(actionName);
+        // Return the dog's series by default for compatibility
+        return actionSeriesDog.getOrDefault(actionName, actionSeriesCat.get(actionName));
     }
 
     private String formaterNomAction(String actionName) {
@@ -194,20 +307,8 @@ public class ChartManager {
             case "mangerGamelle": return "Manger Gamelle";
             case "mangerGamelle2": return "Manger Gamelle Chat";
             case "monterTable": return "Monter Table";
+            case "jouerArbreAChat": return "Jouer Arbre à Chat";
             default: return actionName;
-        }
-    }
-
-    private java.awt.Color obtenirCouleurPourAction(String actionName) {
-        switch (actionName) {
-            case "dormirPanier": return java.awt.Color.BLUE;
-            case "dormirNiche": return java.awt.Color.GREEN;
-            case "dormirLit": return java.awt.Color.RED;
-            case "dormirCanape": return java.awt.Color.ORANGE;
-            case "mangerGamelle": return java.awt.Color.MAGENTA;
-            case "mangerGamelle2": return java.awt.Color.CYAN;
-            case "monterTable": return java.awt.Color.PINK;
-            default: return java.awt.Color.BLACK;
         }
     }
 }
