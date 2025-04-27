@@ -14,7 +14,7 @@
 
 - **Simulation de comportements** : Le chien peut réaliser des actions comme manger, dormir ou jouer, définies dans `GameConfiguration`.
 - **Déplacements** : L’animal se déplace entre les pièces (cuisine, jardin, etc.) en passant par des portes prédéfinies (`RoomPosition`).
-- **Apprentissage** : Un système d’apprentissage (`Learning`) ajuste les probabilités des actions via des scores (+10 pour une récompense, -10 pour une punition, -1 pour une dégradation naturelle).
+- **Apprentissage** : Un système d’apprentissage (`Learning`) ajuste les probabilités des actions (+10 pour une récompense, -10 pour une punition, -1 pour une dégradation naturelle).
 - **Gestion des états** : L’état de l’animal (santé, état mental, confiance) est mis à jour selon ses actions (`StateAnimal`, `Animal.confiance`).
 - **Journal narratif** : Les actions sont enregistrées dans un journal (`Journal`) sous forme narrative à la première personne (ex. "je suis allé dormir dans mon panier").
 - **Interface graphique** : Une IHM permet de visualiser la maison, les actions de l’animal, et son journal, avec des options pour démarrer, sauvegarder ou quitter une partie.
