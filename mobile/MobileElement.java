@@ -11,6 +11,11 @@ public class MobileElement {
     protected long actionStartTime; // Temps de début de l'action
     private int sizeImage;
 
+	public void supAllAction() {
+    	while(!dontHaveAction()) {
+    		supFirstAction();
+    	}
+    }
     public int getSizeImage() {
 		return sizeImage;
 	}
