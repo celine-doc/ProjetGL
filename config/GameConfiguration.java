@@ -120,11 +120,11 @@ public class GameConfiguration {
 		listNomActionChien.add("dormirLit");
 		listActionChien.put("dormirCanape", new Action("living","dormirCanape",RoomPosition.CANAPE,20,"Je monte sur le canapé pour dormir… mon humain va râler, mais tant pis",160));
 		listNomActionChien.add("dormirCanape");
-		listActionChien.put("mangerGamelle", new Action("kitchen","manger",RoomPosition.GAMELLE,20,"Bon… c’est l’heure du festin ! À moi la gamelle !",100));
+		listActionChien.put("mangerGamelle", new Action("kitchen","mangerGamelle",RoomPosition.GAMELLE,20,"Bon… c’est l’heure du festin ! À moi la gamelle !",100));
 		listNomActionChien.add("mangerGamelle");
-		listActionChien.put("mangerGamelle2", new Action("kitchen","manger",RoomPosition.GAMELLE2,15,"J’me suis discrètement servi dans la gamelle du chat…",100));
+		listActionChien.put("mangerGamelle2", new Action("kitchen","mangerGamelle2",RoomPosition.GAMELLE2,15,"J’me suis discrètement servi dans la gamelle du chat…",100));
 		listNomActionChien.add("mangerGamelle2");
-		listActionChien.put("monterTable", new Action("kitchen","monterTable",RoomPosition.TABLE_A_MANGER,5,"Je monte juste jeter un œil… promis je touche à rien (enfin presque)",0));
+		listActionChien.put("monterTable", new Action("kitchen","monterTable",RoomPosition.TABLE_A_MANGER,5,"Je monte juste jeter un œil… promis je touche à rien (enfin presque)",20));
 		listNomActionChien.add("monterTable");
 	}
 	
@@ -132,19 +132,19 @@ public class GameConfiguration {
 	public static ArrayList<String> listNomActionChat = new ArrayList<String>();
 	
 	public static void initActionChat() {
-		listActionChat.put("dormirPanier", new Action("bedroom","dormirPanier",RoomPosition.PANIER_CHIEN,0,"je suis allé dormir dans le panier du chien .",200));
+		listActionChat.put("dormirPanier", new Action("bedroom","dormirPanier",RoomPosition.PANIER_CHIEN,10,"je suis allé dormir dans le panier du chien .",200));
 		listNomActionChat.add("dormirPanier");
-		listActionChat.put("dormirLit", new Action("bedroom","dormirLit",RoomPosition.LIT,1,"je suis allé dormir sur le lit , bien au chaud ",200));
+		listActionChat.put("dormirLit", new Action("bedroom","dormirLit",RoomPosition.LIT,5,"je suis allé dormir sur le lit , bien au chaud ",200));
 		listNomActionChat.add("dormirLit");
-		listActionChat.put("jouerArbreAChat", new Action("bedroom","jouerArbreAChat",RoomPosition.ARBRE_CHAT,0,"Wouhouuu ! C’est mon parc d’attractions à moi tout seul !",200));
+		listActionChat.put("jouerArbreAChat", new Action("bedroom","jouerArbreAChat",RoomPosition.ARBRE_CHAT,25,"Wouhouuu ! C’est mon parc d’attractions à moi tout seul !",200));
 		listNomActionChat.add("jouerArbreAChat");
-		listActionChat.put("dormirCanape", new Action("living","dormirCanape",RoomPosition.CANAPE,0,"Je monte sur le canapé pour dormir… mon humain va râler, mais tant pis",160));
+		listActionChat.put("dormirCanape", new Action("living","dormirCanape",RoomPosition.CANAPE,15,"Je monte sur le canapé pour dormir… mon humain va râler, mais tant pis",160));
 		listNomActionChat.add("dormirCanape");
-		listActionChat.put("mangerGamelle", new Action("kitchen","manger",RoomPosition.GAMELLE,0,"J’me suis discrètement servi dans la gamelle du chien…",100));
+		listActionChat.put("mangerGamelle", new Action("kitchen","mangerGamelle",RoomPosition.GAMELLE,10,"J’me suis discrètement servi dans la gamelle du chien…",100));
 		listNomActionChat.add("mangerGamelle");
-		listActionChat.put("mangerGamelle2", new Action("kitchen","manger",RoomPosition.GAMELLE2,0,"Bon… c’est l’heure du festin ! À moi la gamelle !",100));
+		listActionChat.put("mangerGamelle2", new Action("kitchen","mangerGamelle2",RoomPosition.GAMELLE2,10,"Bon… c’est l’heure du festin ! À moi la gamelle !",100));
 		listNomActionChat.add("mangerGamelle2");
-		listActionChat.put("monterTable", new Action("kitchen","monterTable",RoomPosition.TABLE_A_MANGER,0,"Je monte juste jeter un œil… promis je touche à rien (enfin presque)",0));
+		listActionChat.put("monterTable", new Action("kitchen","monterTable",RoomPosition.TABLE_A_MANGER,10,"Je monte juste jeter un œil… promis je touche à rien (enfin presque)",20));
 		listNomActionChat.add("monterTable");
 		
 		
