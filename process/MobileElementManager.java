@@ -616,6 +616,9 @@ public class MobileElementManager{
 				}
 			}
 			break;
+		case "randomMoove" :
+				// Déplacement aléatoire
+				break;
 		default :
 			System.err.println("err default"+element.getAction());
 			element.supFirstAction();
