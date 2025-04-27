@@ -22,18 +22,12 @@ public class PauseGUI extends JFrame {
         Container contentPane = getContentPane();
         contentPane.setLayout(new BorderLayout());
 
-        JPanel buttonPanel = new JPanel(new GridLayout(5, 1, 20, 20));
+        JPanel buttonPanel = new JPanel(new GridLayout(2, 1, 20, 20));
 
         JButton reprendre = new JButton("Reprendre");
-        JButton sauvegarder = new JButton("Sauvegarder");
-        JButton parametres = new JButton("Paramètres");
-        JButton sauvegarderQuitter = new JButton("Sauvegarder et Quitter");
         JButton quitter = new JButton("Quitter");
 
         buttonPanel.add(reprendre);
-        buttonPanel.add(sauvegarder);
-        buttonPanel.add(parametres);
-        buttonPanel.add(sauvegarderQuitter);
         buttonPanel.add(quitter);
 
         contentPane.add(buttonPanel, BorderLayout.CENTER);
@@ -62,3 +56,4 @@ public class PauseGUI extends JFrame {
     	
     }
 }
+
