@@ -31,6 +31,9 @@ public class Father extends MobileElement {
 	public boolean isPunishment() {
 		return punishment;
 	}
+	public void setPunishment(boolean punishment) {
+		this.punishment = punishment;
+	}
 	// ------------------
 }
 
