@@ -223,7 +223,7 @@ public class MaisonGUI extends JFrame implements Runnable {
             try {
                 if (runningGame) {
                     dashboard.repaint();
-                    manager.action(Math.random());
+                    manager.action();
                     mettreAJourGraphes();
                     iterationCount++;
                     if (iterationCount % 10 == 0) {
