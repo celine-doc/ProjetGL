@@ -262,7 +262,7 @@ public class MobileElementManager {
             directions[j] = temp;
         }
         MobileElement tmp = element;
-        for (int direction : directions) {
+	int direction = directions[0];
             switch (direction) {
                 case 0:
                     moveLeftElement(element);
@@ -285,7 +285,6 @@ public class MobileElementManager {
                     if (!element.getPosition().equals(tmp.getPosition())) return;
                     break;
             }
-        }
         System.out.println("Aucun déplacement possible pour " + element.getClass().getSimpleName() + " à la position " + element.getPosition());
     }
 
