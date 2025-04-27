@@ -881,7 +881,7 @@ public class MobileElementManager {
 					element.supFirstAction();
 					element.addAction("goLiving");
 					element.addAction("goKitchen");
-					randomMoveElement(element);
+					element.addAction("randomMoove");
 					break;
 				case "living":
 					element.supFirstAction();
