@@ -22,7 +22,6 @@ public class GraphiquesApprentissageGUI extends JFrame {
 
     public GraphiquesApprentissageGUI(String title, ChartManager chartManager, List<String> actionNames) {
         this.chartManager = chartManager;
-        // Combine dog and cat action names, removing duplicates
         this.actionNames = new ArrayList<>(new HashSet<String>() {{
             addAll(GameConfiguration.listNomActionChien);
             addAll(GameConfiguration.listNomActionChat);
