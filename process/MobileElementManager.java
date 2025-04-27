@@ -667,25 +667,25 @@ public class MobileElementManager{
 				}
 				break;
 			case "kitchen" :
-				goTo_hF(RoomPosition.DOOR_LAUNDRY_TO_KITCHEN, element);
+				goTo_hF(RoomPosition.DOOR_LAUNDRY_TO_KITCHEN, humain);
 				if(humain.getPosition().equals(RoomPosition.DOOR_LAUNDRY_TO_KITCHEN)){
 					humain.setLocation("kitchen");
 				}
 				break;
 			case "bedroom" :
-				goTo_vF(RoomPosition.DOOR_LAUNDRY_TO_LIVING,element);
+				goTo_vF(RoomPosition.DOOR_LAUNDRY_TO_LIVING,humain);
 				if(humain.getPosition().equals(RoomPosition.DOOR_LAUNDRY_TO_LIVING)){
 					humain.setLocation("living");
 				}
 				break;
 			case "living" :
-				goTo_vF(RoomPosition.DOOR_LAUNDRY_TO_LIVING,element);
+				goTo_vF(RoomPosition.DOOR_LAUNDRY_TO_LIVING,humain);
 				if(humain.getPosition().equals(RoomPosition.DOOR_LAUNDRY_TO_LIVING)){
 					humain.setLocation("living");
 				}
 				break;
 			case "garden" :
-				goTo_vF(RoomPosition.DOOR_LAUNDRY_TO_LIVING,element);
+				goTo_vF(RoomPosition.DOOR_LAUNDRY_TO_LIVING,humain);
 				if(humain.getPosition().equals(RoomPosition.DOOR_LAUNDRY_TO_LIVING)){
 					humain.setLocation("living");
 				}
@@ -695,31 +695,31 @@ public class MobileElementManager{
 		case "kitchen" :
 			switch(humain.getTarget().getLocation()) {
 			case "bathroom" :
-				goTo_hF(RoomPosition.DOOR_KITCHEN_TO_LAUNDRY, element);
+				goTo_hF(RoomPosition.DOOR_KITCHEN_TO_LAUNDRY, humain);
 				if(humain.getPosition().equals(RoomPosition.DOOR_KITCHEN_TO_LAUNDRY)){
 					humain.setLocation("laundry");
 				}
 				break;
 			case "laundry" :
-				goTo_hF(RoomPosition.DOOR_KITCHEN_TO_LAUNDRY, element);
+				goTo_hF(RoomPosition.DOOR_KITCHEN_TO_LAUNDRY, humain);
 				if(humain.getPosition().equals(RoomPosition.DOOR_KITCHEN_TO_LAUNDRY)){
 					humain.setLocation("laundry");
 				}
 				break;
 			case "bedroom" :
-				goTo_vF(RoomPosition.DOOR_KITCHEN_TO_LIVING, element);
+				goTo_vF(RoomPosition.DOOR_KITCHEN_TO_LIVING, humain);
 				if(humain.getPosition().equals(RoomPosition.DOOR_KITCHEN_TO_LIVING)){
 					humain.setLocation("living");
 				}
 				break;
 			case "living" :
-				goTo_vF(RoomPosition.DOOR_KITCHEN_TO_LIVING, element);
+				goTo_vF(RoomPosition.DOOR_KITCHEN_TO_LIVING, humain);
 				if(humain.getPosition().equals(RoomPosition.DOOR_KITCHEN_TO_LIVING)){
 					humain.setLocation("living");
 				}
 				break;
 			case "garden" :
-				goTo_vF(RoomPosition.DOOR_KITCHEN_TO_LIVING, element);
+				goTo_vF(RoomPosition.DOOR_KITCHEN_TO_LIVING, humain);
 				if(humain.getPosition().equals(RoomPosition.DOOR_KITCHEN_TO_LIVING)){
 					humain.setLocation("living");
 				}
@@ -729,31 +729,31 @@ public class MobileElementManager{
 		case "bedroom" :
 			switch(humain.getTarget().getLocation()) {
 			case "bathroom" :
-				goTo_vF(RoomPosition.DOOR_BEDROOM_TO_BATHROOM,element);
+				goTo_vF(RoomPosition.DOOR_BEDROOM_TO_BATHROOM,humain);
 				if(humain.getPosition().equals(RoomPosition.DOOR_BEDROOM_TO_BATHROOM)){
 					humain.setLocation("bathroom");
 				}
 				break;
 			case "laundry" :
-				goTo_hF(RoomPosition.DOOR_BEDROOM_TO_LIVING,element);
+				goTo_hF(RoomPosition.DOOR_BEDROOM_TO_LIVING,humain);
 				if(humain.getPosition().equals(RoomPosition.DOOR_BEDROOM_TO_LIVING)){
 					humain.setLocation("living");
 				}
 				break;
 			case "kitchen" :
-				goTo_hF(RoomPosition.DOOR_BEDROOM_TO_LIVING,element);
+				goTo_hF(RoomPosition.DOOR_BEDROOM_TO_LIVING,humain);
 				if(humain.getPosition().equals(RoomPosition.DOOR_BEDROOM_TO_LIVING)){
 					humain.setLocation("living");
 				}
 				break;
 			case "living" :
-				goTo_hF(RoomPosition.DOOR_BEDROOM_TO_LIVING,element);
+				goTo_hF(RoomPosition.DOOR_BEDROOM_TO_LIVING,humain);
 				if(humain.getPosition().equals(RoomPosition.DOOR_BEDROOM_TO_LIVING)){
 					humain.setLocation("living");
 				}
 				break;
 			case "garden" :
-				goTo_hF(RoomPosition.DOOR_BEDROOM_TO_LIVING,element);
+				goTo_hF(RoomPosition.DOOR_BEDROOM_TO_LIVING,humain);
 				if(humain.getPosition().equals(RoomPosition.DOOR_BEDROOM_TO_LIVING)){
 					humain.setLocation("living");
 				}
@@ -763,31 +763,31 @@ public class MobileElementManager{
 		case "living" :
 			switch(humain.getTarget().getLocation()) {
 			case "bathroom" :
-				goTo_vF(RoomPosition.DOOR_LAUNDRY_TO_LIVING, element);
+				goTo_vF(RoomPosition.DOOR_LAUNDRY_TO_LIVING, humain);
 				if(humain.getPosition().equals(RoomPosition.DOOR_BEDROOM_TO_LIVING)){
 					humain.setLocation("living");
 				}
 				break;
 			case "laundry" :
-				goTo_vF(RoomPosition.DOOR_LAUNDRY_TO_LIVING, element);
+				goTo_vF(RoomPosition.DOOR_LAUNDRY_TO_LIVING, humain);
 				if(humain.getPosition().equals(RoomPosition.DOOR_LAUNDRY_TO_LIVING)){
 					humain.setLocation("living");
 				}
 				break;
 			case "kitchen" :
-				goTo_vF(RoomPosition.DOOR_LIVING_TO_KITCHEN,element);
+				goTo_vF(RoomPosition.DOOR_LIVING_TO_KITCHEN,humain);
 				if(humain.getPosition().equals(RoomPosition.DOOR_LAUNDRY_TO_LIVING)){
 					humain.setLocation("kitchen");
 				}
 				break;
 			case "bedroom" :
-				goTo_hF(RoomPosition.DOOR_LIVING_TO_BEDROOM,element);
+				goTo_hF(RoomPosition.DOOR_LIVING_TO_BEDROOM,humain);
 				if(humain.getPosition().equals(RoomPosition.DOOR_LIVING_TO_BEDROOM)){
 					humain.setLocation("bedroom");
 				}
 				break;
 			case "garden" :
-				goTo_vF(RoomPosition.DOOR_GARDEN_TO_LIVING,element);
+				goTo_vF(RoomPosition.DOOR_GARDEN_TO_LIVING,humain);
 				if(humain.getPosition().equals(RoomPosition.DOOR_GARDEN_TO_LIVING)){
 					humain.setLocation("garden");
 				}
@@ -797,31 +797,31 @@ public class MobileElementManager{
 		case "garden" :
 			switch(humain.getTarget().getLocation()) {
 			case "bathroom" :
-				goTo_vF(RoomPosition.DOOR_LIVING_TO_GARDEN,element);
+				goTo_vF(RoomPosition.DOOR_LIVING_TO_GARDEN,humain);
 				if(humain.getPosition().equals(RoomPosition.DOOR_LIVING_TO_GARDEN)){
 					humain.setLocation("living");
 				}
 				break;
 			case "laundry" :
-				goTo_vF(RoomPosition.DOOR_LIVING_TO_GARDEN,element);
+				goTo_vF(RoomPosition.DOOR_LIVING_TO_GARDEN,humain);
 				if(humain.getPosition().equals(RoomPosition.DOOR_LIVING_TO_GARDEN)){
 					humain.setLocation("living");
 				}
 				break;
 			case "kitchen" :
-				goTo_vF(RoomPosition.DOOR_LIVING_TO_GARDEN,element);
+				goTo_vF(RoomPosition.DOOR_LIVING_TO_GARDEN,humain);
 				if(humain.getPosition().equals(RoomPosition.DOOR_LIVING_TO_GARDEN)){
 					humain.setLocation("living");
 				}
 				break;
 			case "bedroom" :
-				goTo_vF(RoomPosition.DOOR_LIVING_TO_GARDEN,element);
+				goTo_vF(RoomPosition.DOOR_LIVING_TO_GARDEN,humain);
 				if(humain.getPosition().equals(RoomPosition.DOOR_LIVING_TO_GARDEN)){
 					humain.setLocation("living");
 				}
 				break;
 			case "living" :
-				goTo_vF(RoomPosition.DOOR_LIVING_TO_GARDEN,element);
+				goTo_vF(RoomPosition.DOOR_LIVING_TO_GARDEN,humain);
 				if(humain.getPosition().equals(RoomPosition.DOOR_LIVING_TO_GARDEN)){
 					humain.setLocation("living");
 				}
