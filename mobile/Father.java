@@ -9,12 +9,13 @@ public class Father extends MobileElement {
 	private static final long serialVersionUID = 1L;
 	private boolean punishment = false;
 	
-	public Father(Block position) {
+	public Father(Block position,String location) {
 		this.position = position;
 		this.actionAnimal = false; // A mettre dans une classe individu intermédaire
 		this.target = null; // A mettre dans une classe individu intermédaire
 		addAction("randomMoove"); // Initialisation à un mouvement aléatoire
 		setSizeImage(GameConfiguration.FatherSize);
+		this.setLocation(location);
 	}
 
 	//// A mettre dans une classe individu intermédaire : 
