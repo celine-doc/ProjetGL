@@ -6,7 +6,12 @@ import javax.swing.*;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.data.time.TimeSeries;
+
+import config.GameConfiguration;
+
+import java.util.ArrayList;
 import java.util.List;
+import java.util.HashSet;
 
 public class GraphiquesApprentissageGUI extends JFrame {
     private ChartManager chartManager;
@@ -14,11 +19,14 @@ public class GraphiquesApprentissageGUI extends JFrame {
     private JPanel graphPanel;
     private String currentAction;
     private ChartPanel currentChartPanel;
-    private TimeSeries currentSeries;
 
     public GraphiquesApprentissageGUI(String title, ChartManager chartManager, List<String> actionNames) {
         this.chartManager = chartManager;
-        this.actionNames = actionNames;
+        // Combine dog and cat action names, removing duplicates
+        this.actionNames = new ArrayList<>(new HashSet<String>() {{
+            addAll(GameConfiguration.listNomActionChien);
+            addAll(GameConfiguration.listNomActionChat);
+        }});
         setTitle(title);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setPreferredSize(new Dimension(800, 600));
@@ -55,7 +63,6 @@ public class GraphiquesApprentissageGUI extends JFrame {
 
     private void afficherGraphePourAction(String actionName) {
         currentAction = actionName;
-        currentSeries = chartManager.getActionSeries(actionName);
 
         JFreeChart jChart = chartManager.getActionEvolutionChart(actionName);
         if (jChart == null) {
@@ -72,10 +79,10 @@ public class GraphiquesApprentissageGUI extends JFrame {
     }
 
     public void mettreAJourGrapheAction() {
-        if (currentAction == null || currentSeries == null || currentChartPanel == null) {
+        if (currentAction == null || currentChartPanel == null) {
             return;
         }
-        // La série est mise à jour dans ChartManager, juste rafraîchir
+        // The series are updated in ChartManager, just refresh
         currentChartPanel.repaint();
         graphPanel.revalidate();
         graphPanel.repaint();
