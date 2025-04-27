@@ -135,7 +135,7 @@ public class Dashboard extends JPanel {
 		g.drawImage(GameConfiguration.IMAGE_EVIER_CUISINE,RoomPosition.EVIER_CUISINE_X,RoomPosition.EVIER_CUISINE_Y,GameConfiguration.SIZE_EVIER_CUISINE_X,GameConfiguration.SIZE_EVIER_CUISINE_Y,null);
 		g.drawImage(GameConfiguration.IMAGE_FOUR,RoomPosition.FOUR_X,RoomPosition.FOUR_Y,GameConfiguration.SIZE_FOUR_X,GameConfiguration.SIZE_FOUR_Y,null);
 		g.drawImage(GameConfiguration.IMAGE_FRIGO,RoomPosition.FRIGO_X,RoomPosition.FRIGO_Y,GameConfiguration.SIZE_FRIGO_X,GameConfiguration.SIZE_FRIGO_Y,null);
-		g.drawImage(GameConfiguration.IMAGE_MEUBLE_CUISINE,RoomPosition.MEUBLE_CUISINE_X,RoomPosition.MEUBLE_CUISINE_Y,GameConfiguration.SIZE_MEBUBLE_CUISINE_X,GameConfiguration.SIZE_MEUBLE_CUISINE_Y,null);
+		g.drawImage(GameConfiguration.IMAGE_MEUBLE_CUISINE,RoomPosition.MEUBLE_CUISINE_X,RoomPosition.MEUBLE_CUISINE_Y,GameConfiguration.SIZE_MEUBLE_CUISINE_X,GameConfiguration.SIZE_MEUBLE_CUISINE_Y,null);
 		g.drawImage(GameConfiguration.IMAGE_MACHINE_A_LAVER,RoomPosition.MACHINE_A_LAVER_X,RoomPosition.MACHINE_A_LAVER_Y,GameConfiguration.SIZE_MACHINE_A_LAVER_X,GameConfiguration.SIZE_MACHINE_A_LAVER_Y,null);
 		g.drawImage(GameConfiguration.IMAGE_SECHOIR,RoomPosition.SECHOIR_X,RoomPosition.SECHOIR_Y,GameConfiguration.SIZE_SECHOIR_X,GameConfiguration.SIZE_SECHOIR_Y,null);
 		g.drawImage(GameConfiguration.IMAGE_PANIER_LINGE,RoomPosition.PANIER_LINGE_X,RoomPosition.PANIER_LINGE_Y,GameConfiguration.SIZE_PANIER_LINGE_X,GameConfiguration.SIZE_PANIER_LINGE_Y,null);
