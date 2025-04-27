@@ -1233,6 +1233,7 @@ public class MobileElementManager {
 				}
 				humain.setActionAnimal(false);
 				humain.setTarget(null);
+				humain.addAction("randomMoove");
 			}
 		}
 	}
