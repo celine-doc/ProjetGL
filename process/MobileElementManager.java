@@ -8,10 +8,11 @@ import config.GameConfiguration;
 import config.RoomPosition;
 import engine.Action;
 import guiT.ChartManager;
+import guiT.GraphiquesApprentissageGUI;
 import map.Block;
 import map.Map;
 import mobile.Animal;
-import mobile.Cat;
+//import mobile.Cat;
 import mobile.Dog;
 import mobile.Father;
 import mobile.MobileElement;
@@ -19,16 +20,18 @@ import mobile.MobileElement;
 public class MobileElementManager {
     private Map map;
     private Dog dog;
-    private Cat cat;
+    //private Cat cat;
     private Father father;
     private ChartManager chartManager;
+    private GraphiquesApprentissageGUI gui;
 
-    public MobileElementManager(Map map) {
+    public MobileElementManager(Map map, GraphiquesApprentissageGUI gui) {
         this.map = map;
         dog = new Dog(new Block(GameConfiguration.DEFAULT_POSITION_DOG_X, GameConfiguration.DEFAULT_POSITION_DOG_Y), "bathroom");
         father = new Father(new Block(5, 5));
         GameConfiguration.initialisation();
         chartManager = new ChartManager();
+        this.gui = gui;
     }
 
     public Father getFather() {
@@ -40,6 +43,7 @@ public class MobileElementManager {
         if (dog.dontHaveAction()) {
             Action act = selectedAction(dog, random);
             if (act != null) {
+            	System.err.println(act.getName());
                 goToNewAction(dog, act);
             } else {
                 dog.addAction("randomMoove");
@@ -47,7 +51,9 @@ public class MobileElementManager {
         } else {
             mooveElement(dog);
         }
-        mettreAJourMetriquesApprentissage(dog);
+        mettreAJourMetriquesApprentissage(dog); //  enregistrer les métriques
+        gui.mettreAJourGrapheAction(); // Rafraîchir le graphique
+        
         if (father.getActionAnimal()) {
             targeting(father);
         } else {
@@ -58,9 +64,11 @@ public class MobileElementManager {
     public Action selectedAction(Animal animal, int random) {
         ArrayList<String> listNomAction = animal.getListNomAction();
         HashMap<String, Action> listAction = animal.getListActionPossible();
+        int probaTmp = 0;
         for (Iterator<String> it = listNomAction.iterator(); it.hasNext();) {
             String currentAction = it.next();
-            if (random < animal.getProba(listAction.get(currentAction)) || random == animal.getProba(listAction.get(currentAction))) {
+            probaTmp += animal.getProba(listAction.get(currentAction));
+            if (random < probaTmp || random == probaTmp) {
                 return listAction.get(currentAction);
             }
         }
@@ -71,9 +79,9 @@ public class MobileElementManager {
         return dog;
     }
 
-    public Cat getCat() {
-        return cat;
-    }
+   // public Cat getCat() {
+     //   return cat;
+   // }
 
     public ChartManager getChartManager() {
         return chartManager;
@@ -230,23 +238,28 @@ public class MobileElementManager {
             directions[i] = directions[j];
             directions[j] = temp;
         }
+        MobileElement tmp = element;
         for (int direction : directions) {
             switch (direction) {
                 case 0:
-                    randomMoveLeftElement(element);
-                    if (!element.getPosition().equals(element.getPosition())) return; // Vérifier si le déplacement a réussi
+                    moveLeftElement(element);
+                    moveLeftElement(element);
+                    if (!element.getPosition().equals(tmp.getPosition())) return; // Vérifier si le déplacement a réussi
                     break;
                 case 1:
-                    randomMoveRightElement(element);
-                    if (!element.getPosition().equals(element.getPosition())) return;
+                	moveRightElement(element);
+                	moveRightElement(element);
+                    if (!element.getPosition().equals(tmp.getPosition())) return;
                     break;
                 case 2:
-                    randomMoveUpElement(element);
-                    if (!element.getPosition().equals(element.getPosition())) return;
+                    moveUpElement(element);
+                    moveUpElement(element);
+                    if (!element.getPosition().equals(tmp.getPosition())) return;
                     break;
                 case 3:
-                    randomMoveDownElement(element);
-                    if (!element.getPosition().equals(element.getPosition())) return;
+                    moveDownElement(element);
+                    moveDownElement(element);
+                    if (!element.getPosition().equals(tmp.getPosition())) return;
                     break;
             }
         }
@@ -629,8 +642,8 @@ public class MobileElementManager {
                         }
                         break;
                     case "garden":
-                        goTo_vF(RoomPosition.DOOR_LIVING_TO_GARDEN, element);
-                        if (element.getPosition().equals(RoomPosition.DOOR_LIVING_TO_GARDEN)) {
+                        goTo_vF(RoomPosition.DOOR_GARDEN_TO_LIVING, element);
+                        if (element.getPosition().equals(RoomPosition.DOOR_GARDEN_TO_LIVING)) {
                             element.supFirstAction();
                             element.setLocation("living");
                         }
@@ -642,8 +655,8 @@ public class MobileElementManager {
                 break;
             case "goGarden":
                 if (element.getLocation().equals("living")) {
-                    goTo_vF(RoomPosition.DOOR_GARDEN_TO_LIVING, element);
-                    if (element.getPosition().equals(RoomPosition.DOOR_GARDEN_TO_LIVING)) {
+                    goTo_vF(RoomPosition.DOOR_LIVING_TO_GARDEN, element);
+                    if (element.getPosition().equals(RoomPosition.DOOR_LIVING_TO_GARDEN)) {
                         element.supFirstAction();
                         element.setLocation("garden");
                     }
@@ -657,16 +670,13 @@ public class MobileElementManager {
                     if (element.getActionTime() == 0) {
                         dog.interagir("dormirPanier");
                         element.setActionTime(element.getActionTime() + 1);
-                        System.out.println(element.getActionTime() + ":: 1 / interagir");
                     } else {
                         System.out.println(element.getActionTime() + " :: 1 / else");
                         if (element.getActionTime() >= GameConfiguration.listActionChien.get(action).getTimeAction()) {
-                            System.out.println(element.getActionTime() + " else-if, fin");
                             element.supFirstAction();
                             element.setActionTime(0);
                         } else {
                             System.out.println(element.getActionTime() + ":: 1 / else-else");
-                            element.setActionTime(element.getActionTime() + 1);
                         }
                     }
                 }
@@ -693,7 +703,6 @@ public class MobileElementManager {
                     if (element.getActionTime() == 0) {
                         dog.interagir("dormirLit");
                         element.setActionTime(element.getActionTime() + 1);
-                        element.setActionTime(GameConfiguration.listActionChien.get(action).getTimeAction());
                     } else {
                         if (element.getActionTime() >= GameConfiguration.listActionChien.get(action).getTimeAction()) {
                             element.supFirstAction();
@@ -778,7 +787,7 @@ public class MobileElementManager {
         }
     }
 
-    private void targeting(MobileElement humain) {
+    private void targeting(Father humain) { // Mettre class abstraite individue pour régler
         if (humain.getTarget() == null || humain.getPosition() == null || humain.getTarget().getPosition() == null) {
             System.err.println("Erreur: Cible ou position nulle pour " + humain.getClass().getSimpleName());
             humain.setActionAnimal(false);
@@ -996,7 +1005,7 @@ public class MobileElementManager {
             Dog dog = (Dog) humain.getTarget();
             goTo_hF(dog.getPosition(), humain);
             if (humain.getPosition().equals(dog.getPosition())) {
-                if (((Father) humain).isPunishment()) {
+                if (humain.isPunishment()) {
                     dog.interagir("punir");
                     System.out.println("Le Father punit le chien.");
                 } else {
@@ -1011,10 +1020,10 @@ public class MobileElementManager {
 
     private void mettreAJourMetriquesApprentissage(Dog dog) {
         dog.getLearning().degradationNaturelle();
-        dog.degradationNaturelleMetriques();
         chartManager.registerActionScores(dog);
         chartManager.registerTrustByStep(dog.getConfiance());
         chartManager.registerMentalStateByStep(dog.getMentalState());
         chartManager.registerPhysicalStateByStep(dog.getPhysicalState());
     }
 }
+
