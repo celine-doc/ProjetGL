@@ -63,7 +63,6 @@ public class MenuGUI extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
 			menuJeu = new MaisonGUI("maison");
-			menuJeu.startGame();
 			close();
 		}
 		
