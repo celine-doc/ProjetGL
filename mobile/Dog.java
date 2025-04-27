@@ -16,6 +16,7 @@ public class Dog extends Animal {
         this.journal = new Journal("journal_dog.txt");
         this.setListActionPossible(GameConfiguration.listActionChien);
         this.setListNomAction(GameConfiguration.listNomActionChien);
+        this.setActionTime(0);
     }
 
     public void dormirPanier() {
