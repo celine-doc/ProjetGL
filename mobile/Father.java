@@ -11,6 +11,7 @@ public class Father extends MobileElement {
 		this.position = position;
 		this.actionAnimal = false; // A mettre dans une classe individu intermédaire
 		this.target = null; // A mettre dans une classe individu intermédaire
+		addAction("randomMoove"); // Initialisation à un mouvement aléatoire
 	}
 
 	//// A mettre dans une classe individu intermédaire : 
