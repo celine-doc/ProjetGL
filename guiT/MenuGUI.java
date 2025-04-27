@@ -42,7 +42,7 @@ public class MenuGUI extends JFrame {
         setResizable(false);
 
         nouvellePartie.addActionListener(new actionStartGame());
-        quitter.addActionListener(e -> System.exit(0)); // Ajouter une action pour quitter
+        quitter.addActionListener(e -> System.exit(0)); // pour quitter
     }
 
     public static void main(String[] args) {
