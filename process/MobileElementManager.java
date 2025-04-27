@@ -830,7 +830,8 @@ public class MobileElementManager{
 			break;
 		}
 		}else{
-			// avec selon les pièces pour éviter les objet / mur ?
+			// avec selon les pièces pour éviter les objet / mur ? 
+			// Action R/P lorsqu'il est dans la même pièce
 	}
 	}
 
