@@ -693,6 +693,7 @@ public class MobileElementManager {
                     if (element.getActionTime() == 0) {
                         dog.interagir("dormirLit");
                         element.setActionTime(element.getActionTime() + 1);
+                        element.setActionTime(GameConfiguration.listActionChien.get(action).getTimeAction());
                     } else {
                         if (element.getActionTime() >= GameConfiguration.listActionChien.get(action).getTimeAction()) {
                             element.supFirstAction();
