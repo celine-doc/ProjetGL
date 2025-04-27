@@ -155,5 +155,9 @@ public class Dashboard extends JPanel {
 		g.drawImage(GameConfiguration.IMAGE_DOG,manager.getDog().getPosition().getLine() * GameConfiguration.BLOCK_SIZE, 
 				manager.getDog().getPosition().getColumn() * GameConfiguration.BLOCK_SIZE, GameConfiguration.DogSize, GameConfiguration.DogSize,
 				null);
+		// Father : 
+		g.drawImage(GameConfiguration.IMAGE_FATHER,manager.getFather().getPosition().getLine()*GameConfiguration.BLOCK_SIZE,
+			    manager.getFather().getPosition().getColumn()*GameConfiguration.BLOCK_SIZE, GameConfiguration.FatherSize,GameConfiguration.FatherSize,
+			    null);
 	}
 } 
