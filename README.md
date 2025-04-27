@@ -14,10 +14,10 @@
 
 - **Simulation de comportements** : Le chien peut réaliser des actions comme manger, dormir ou jouer, définies dans `GameConfiguration`.
 - **Déplacements** : L’animal se déplace entre les pièces (cuisine, jardin, etc.) en passant par des portes prédéfinies (`RoomPosition`).
-- **Apprentissage** : Un système d’apprentissage (`Learning`) ajuste les probabilités des actions (+10 pour une récompense, -10 pour une punition, -1 pour une dégradation naturelle).
-- **Gestion des états** : L’état de l’animal (santé, état mental, confiance) est mis à jour selon ses actions (`StateAnimal`, `Animal.confiance`).
+- **Apprentissage** : Un système d’apprentissage (`Learning`) ajuste les probabilités des actions (+ ou - avec une degradation naturelle)
+- **Gestion des états** : L’état de l’animal (santé, état mental, confiance) est mis à jour selon ses actions .
 - **Journal narratif** : Les actions sont enregistrées dans un journal (`Journal`) sous forme narrative à la première personne (ex. "je suis allé dormir dans mon panier").
-- **Interface graphique** : Une IHM permet de visualiser la maison, les actions de l’animal, et son journal, avec des options pour démarrer, sauvegarder ou quitter une partie.
+- **Interface graphique** : Une IHM permet de visualiser la maison, les actions de l’animal, et son journal, avec des options pour démarrer , mettre en pause ou quitter une partie.
 
 ## Architecture
 
@@ -32,7 +32,7 @@ Le projet est organisé en plusieurs packages :
 - **config** : Contient les données statiques.
   - `GameConfiguration` : Définit les actions et paramètres.
   - `RoomPosition` : Définit les positions des pièces et objets.
-- **gui** : Gère l’interface graphique (non détaillée ici, mais inclut `MaisonGUI`, `Dashboard`, `JournalGUI`).
+- **gui** : Gère l’interface graphique (non détaillée ici, mais inclut `MaisonGUI`, `Dashboard`, `JournalGUI`, ...).
 
 Le moteur fonctionne en boucle (`MaisonGUI.run()`) avec des itérations toutes les 50 ms, gérant les actions, déplacements, et mises à jour de l’état.
 
@@ -47,12 +47,13 @@ Le moteur fonctionne en boucle (`MaisonGUI.run()`) avec des itérations toutes l
 
 1. Clonez ou téléchargez le projet depuis le dépôt.
 2. Importez le projet dans votre IDE.
-3. Assurez-vous que les images (dans `src/gui/images`) sont bien présentes.
-4. Exécutez la classe `Main` (dans `src/main`) pour lancer la simulation.
+3. Assurez-vous que les images (dans `src/images`) sont bien présentes.
+4. Exécutez la classe 'MenuGUI' pour lancer la simulation.
 5. Suivez les instructions à l’écran :
    - Cliquez sur "Nouvelle Partie" pour démarrer une nouvelle simulation.
-   - Utilisez les boutons "Chien" ou "Chat" pour voir le journal.
+   - Utilisez les boutons "Journal Chien" ou "Journal Chat" pour voir le journal.
    - Appuyez sur "Pause" pour mettre en pause et accéder aux options.
+   - Appuyez sur aide pour voir les fonctionnalités
 
 ## Contributions
 
