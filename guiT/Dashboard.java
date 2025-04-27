@@ -150,7 +150,8 @@ public class Dashboard extends JPanel {
 		g.drawImage(GameConfiguration.IMAGE_PLANTE1,RoomPosition.PLANTE1_X,RoomPosition.PLANTE1_Y,GameConfiguration.SIZE_PLANTE1_X,GameConfiguration.SIZE_PLANTE1_Y,null);
 		g.drawImage(GameConfiguration.IMAGE_PLANTE2,RoomPosition.PLANTE2_X,RoomPosition.PLANTE2_Y,GameConfiguration.SIZE_PLANTE2_X,GameConfiguration.SIZE_PLANTE2_Y,null);
 		
-		// affichage de la position du chien : 
+		//  affichage des éléments mobile :
+		// Dog : 
 		g.setColor(Color.BLACK);
 		g.drawImage(GameConfiguration.IMAGE_DOG,manager.getDog().getPosition().getLine() * GameConfiguration.BLOCK_SIZE, 
 				manager.getDog().getPosition().getColumn() * GameConfiguration.BLOCK_SIZE, GameConfiguration.DogSize, GameConfiguration.DogSize,
@@ -158,6 +159,10 @@ public class Dashboard extends JPanel {
 		// Father : 
 		g.drawImage(GameConfiguration.IMAGE_FATHER,manager.getFather().getPosition().getLine()*GameConfiguration.BLOCK_SIZE,
 			    manager.getFather().getPosition().getColumn()*GameConfiguration.BLOCK_SIZE, GameConfiguration.FatherSize,GameConfiguration.FatherSize,
+			    null);
+		// Cat :
+		g.drawImage(GameConfiguration.IMAGE_CAT,manager.getCat().getPosition().getLine()*GameConfiguration.BLOCK_SIZE,
+			    manager.getCat().getPosition().getColumn()*GameConfiguration.BLOCK_SIZE, GameConfiguration.CatSize,GameConfiguration.CatSize,
 			    null);
 	}
 } 
