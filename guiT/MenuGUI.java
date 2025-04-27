@@ -26,16 +26,12 @@ public class MenuGUI extends JFrame {
         Container contentPane = getContentPane();
         contentPane.setLayout(new BorderLayout());
 
-        JPanel buttonPanel = new JPanel(new GridLayout(4, 1, 30, 30));
+        JPanel buttonPanel = new JPanel(new GridLayout(2, 1, 30, 30));
 
         JButton nouvellePartie = new JButton("Nouvelle Partie");
-        JButton chargerPartie = new JButton("Charger Partie");
-        JButton paramètres = new JButton("Paramètres");
         JButton quitter = new JButton("Quitter");
 
         buttonPanel.add(nouvellePartie);
-        buttonPanel.add(chargerPartie);
-        buttonPanel.add(paramètres);
         buttonPanel.add(quitter);
 
         contentPane.add(buttonPanel, BorderLayout.CENTER);
