@@ -29,7 +29,7 @@ public class MobileElementManager {
         this.map = map;
         dog = new Dog(new Block(GameConfiguration.DEFAULT_POSITION_DOG_X, GameConfiguration.DEFAULT_POSITION_DOG_Y), "bathroom");
         cat = new Cat(new Block(GameConfiguration.DEFAULT_POSITION_CAT_X, GameConfiguration.DEFAULT_POSITION_CAT_Y), "bedroom");
-        father = new Father(new Block(5, 5));
+        father = new Father(new Block(125, 25),"bedroom");
         
         GameConfiguration.initialisation();
         chartManager = new ChartManager();
@@ -786,27 +786,219 @@ public class MobileElementManager {
 			}
 			break;
 		case "randomMoove":
+			case "randomMoove":
 			// Détermination du pièce où aller
 			switch((int)(Math.random()*10)%6) {
 			case 0: // salle de bain
-				if(element.getLocation()=="bathroom") {
+				switch (element.getLocation()) {
+				case "bathroom":
 					randomMoveElement(element);
-				}else {
-					
+					break;
+				case "laundry":
+					element.supFirstAction();
+					element.addAction("goBathroom");
+					element.addAction("randomMoove");
+					break;
+				case "kitchen":
+					element.supFirstAction();
+					element.addAction("goLaundry");
+					element.addAction("goBathroom");
+					element.addAction("randomMoove");
+					break;
+				case "bedroom":
+					element.supFirstAction();
+					element.addAction("goBathroom");
+					element.addAction("randomMoove");
+					break;
+				case "living":
+					element.supFirstAction();
+					element.addAction("goLaundry");
+					element.addAction("goBathroom");
+					element.addAction("randomMoove");
+					break;
+				case "garden":
+					element.supFirstAction();
+					element.addAction("goLiving");
+					element.addAction("goLaundry");
+					element.addAction("goBathroom");
+					element.addAction("randomMoove");
+					break;
 				}
 				break;
 			case 1: // Buandery
+				switch (element.getLocation()) {
+				case "bathroom":
+					element.supFirstAction();
+					element.addAction("goLaundry");
+					element.addAction("randomMoove");
+					break;
+				case "laundry":
+					randomMoveElement(element);
+					break;
+				case "kitchen":
+					element.supFirstAction();
+					element.addAction("goLaundry");
+					element.addAction("randomMoove");
+					break;
+				case "bedroom":
+					element.supFirstAction();
+					element.addAction("goLiving");
+					element.addAction("goLaundry");
+					element.addAction("randomMoove");
+					break;
+				case "living":
+					element.supFirstAction();
+					element.addAction("goLaundry");
+					element.addAction("randomMoove");
+					break;
+				case "garden":
+					element.supFirstAction();
+					element.addAction("goLiving");
+					element.addAction("goLaundry");
+					element.addAction("randomMoove");
+					break;
+				}
 				break;
 			case 2: // Cuisine
+				switch (element.getLocation()) {
+				case "bathroom":
+					element.supFirstAction();
+					element.addAction("goLaundry");
+					element.addAction("goKitchen");
+					element.addAction("randomMoove");
+					break;
+				case "laundry":
+					element.supFirstAction();
+					element.addAction("goKitchen");
+					element.addAction("randomMoove");
+					break;
+				case "kitchen":
+					randomMoveElement(element);
+					break;
+				case "bedroom":
+					element.supFirstAction();
+					element.addAction("goLiving");
+					element.addAction("goKitchen");
+					randomMoveElement(element);
+					break;
+				case "living":
+					element.supFirstAction();
+					element.addAction("goKitchen");
+					element.addAction("randomMoove");
+					break;
+				case "garden":
+					element.supFirstAction();
+					element.addAction("goLiving");
+					element.addAction("goKitchen");
+					element.addAction("randomMoove");
+					break;
+				}
 				break;
 			case 3: // Chambre
+				switch (element.getLocation()) {
+				case "bathroom":
+					element.supFirstAction();
+					element.addAction("goBedroom");
+					element.addAction("randomMoove");
+					break;
+				case "laundry":
+					element.supFirstAction();
+					element.addAction("goLiving");
+					element.addAction("goBedroom");
+					element.addAction("randomMoove");
+					break;
+				case "kitchen":
+					element.supFirstAction();
+					element.addAction("goLiving");
+					element.addAction("goBedroom");
+					element.addAction("randomMoove");
+					break;
+				case "bedroom":
+					randomMoveElement(element);
+					break;
+				case "living":
+					element.supFirstAction();
+					element.addAction("goBedroom");
+					element.addAction("randomMoove");
+					break;
+				case "garden":
+					element.supFirstAction();
+					element.addAction("goLiving");
+					element.addAction("goBedroom");
+					element.addAction("randomMoove");
+					break;
+				}
 				break;
 			case 4: // salon
+				switch (element.getLocation()) {
+				case "bathroom":
+					element.supFirstAction();
+					element.addAction("goLaundry");
+					element.addAction("goLiving");
+					element.addAction("randomMoove");
+					break;
+				case "laundry":
+					element.supFirstAction();
+					element.addAction("goLiving");
+					element.addAction("randomMoove");
+					break;
+				case "kitchen":
+					element.supFirstAction();
+					element.addAction("goLiving");
+					element.addAction("randomMoove");
+					break;
+				case "bedroom":
+					element.supFirstAction();
+					element.addAction("goLiving");
+					element.addAction("randomMoove");
+					break;
+				case "living":
+					randomMoveElement(element);
+					break;
+				case "garden":
+					element.supFirstAction();
+					element.addAction("goLiving");
+					element.addAction("randomMoove");
+					break;
+				}
 				break;
-			case 5: // Jardin 
+			case 5: // Jardin
+				switch (element.getLocation()) {
+				case "bathroom":
+					element.supFirstAction();
+					element.addAction("goLaundry");
+					element.addAction("goLiving");
+					element.addAction("goGarden");
+					element.addAction("randomMoove");
+					break;
+				case "laundry":
+					element.supFirstAction();
+					element.addAction("goLiving");
+					element.addAction("goGarden");
+					element.addAction("randomMoove");
+					break;
+				case "kitchen":
+					element.supFirstAction();
+					element.addAction("goLiving");
+					element.addAction("goGarden");
+					element.addAction("randomMoove");
+					break;
+				case "bedroom":
+					element.supFirstAction();
+					element.addAction("goLiving");
+					element.addAction("goGarden");
+					element.addAction("randomMoove");
+					break;
+				case "living":
+					element.supFirstAction();
+					element.addAction("goGarden");
+					element.addAction("randomMoove");
+					break;
+				case "garden":
+					randomMoveElement(element);
+					break;
+				}
 				break;
-			}
-			break;
 		default:
 			System.err.println("Action inconnue: " + action);
 			element.supFirstAction();
