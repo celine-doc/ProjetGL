@@ -18,97 +18,94 @@ import mobile.Father;
 import mobile.MobileElement;
 
 public class MobileElementManager {
-	private Map map;
-	private Dog dog;
-	private Cat cat;
-	private Father father;
-	private ChartManager chartManager;
-	private GraphiquesApprentissageGUI gui;
+    private Map map;
+    private Dog dog;
+    private Cat cat;
+    private Father father;
+    private ChartManager chartManager;
+    private GraphiquesApprentissageGUI gui;
 
-	public MobileElementManager(Map map, GraphiquesApprentissageGUI gui) {
-		this.map = map;
-		dog = new Dog(new Block(GameConfiguration.DEFAULT_POSITION_DOG_X, GameConfiguration.DEFAULT_POSITION_DOG_Y), "bathroom");
-		father = new Father(new Block(125, 25));
-		cat = new Cat(new Block(GameConfiguration.DEFAULT_POSITION_CAT_X, GameConfiguration.DEFAULT_POSITION_CAT_Y), "bedroom");
-		GameConfiguration.initialisation();
-		chartManager = new ChartManager();
-		this.gui = gui;
-	}
+    public MobileElementManager(Map map, GraphiquesApprentissageGUI gui) {
+        this.map = map;
+        dog = new Dog(new Block(GameConfiguration.DEFAULT_POSITION_DOG_X, GameConfiguration.DEFAULT_POSITION_DOG_Y), "bathroom");
+        cat = new Cat(new Block(GameConfiguration.DEFAULT_POSITION_CAT_X, GameConfiguration.DEFAULT_POSITION_CAT_Y), "bedroom");
+        father = new Father(new Block(5, 5));
+        
+        GameConfiguration.initialisation();
+        chartManager = new ChartManager();
+        this.gui = gui;
+    }
 
-	public Cat getCat() {
-		return cat;
-	}
-	public Father getFather() {
-		return father;
-	}
+    public Cat getCat() {
+        return cat;
+    }
 
-	public void action() {
-		int randomDog = (int)((Math.random())*100);// Une valeur aléatoire chacun pour pas qu'il fasse la même chose tt le temps
-		int randomCat = (int)((Math.random())*100);
+    public Father getFather() {
+        return father;
+    }
 
-		if (dog.dontHaveAction()) { // Le chien bouge
-			Action act = selectedAction(dog, randomDog);
-			if (act != null) {
-				System.err.println(act.getName());
-				goToNewAction(dog, act);
-			} else {
-				dog.addAction("randomMoove");
-			}
-		} else {
-			mooveElement(dog);
-		}
+    public void action() {
+        int randomDog = (int)((Math.random())*100);
+        int randomCat = (int)((Math.random())*100);
+        
+        if (dog.dontHaveAction()) {
+            Action act = selectedAction(dog, randomDog);
+            if (act != null) {
+                System.err.println(act.getName());
+                goToNewAction(dog, act);
+            } else {
+                dog.addAction("randomMoove");
+            }
+        } else {
+            mooveElement(dog);
+        }
+        
+        if (cat.dontHaveAction()) {
+            Action act = selectedAction(cat, randomCat);
+            if (act != null) {
+                System.err.println(act.getName());
+                goToNewAction(cat, act);
+            } else {
+                cat.addAction("randomMoove");
+            }
+        } else {
+            mooveElement(cat);
+        }
+        
+        if (father.getActionAnimal()) {
+            targeting(father);
+        } else {
+            mooveElement(father);
+        }
 
-		if (cat.dontHaveAction()) { // Le chat bouge
-			Action act = selectedAction(cat, randomCat);
-			if (act != null) {
-				System.err.println(act.getName());
-				goToNewAction(cat, act);
-			} else {
-				cat.addAction("randomMoove");
-			}
-		} else {
-			mooveElement(cat);
-		}
+        // Update metrics for both dog and cat
+        mettreAJourMetriquesApprentissage(dog, cat);
+        gui.mettreAJourGrapheAction();
+    }
 
-		if (father.getActionAnimal()) { // Le père bouge
-			targeting(father);
-		} else {
-			mooveElement(father);
-		}
+    public Action selectedAction(Animal animal, int random) {
+        ArrayList<String> listNomAction = animal.getListNomAction();
+        HashMap<String, Action> listAction = animal.getListActionPossible();
+        int probaTmp = 0;
+        for (Iterator<String> it = listNomAction.iterator(); it.hasNext();) {
+            String currentAction = it.next();
+            probaTmp += animal.getProba(listAction.get(currentAction));
+            if (random < probaTmp || random == probaTmp) {
+                return listAction.get(currentAction);
+            }
+        }
+        return null;
+    }
 
+    public Dog getDog() {
+        return dog;
+    }
+    
+    public ChartManager getChartManager() {
+        return chartManager;
+    }
 
-		// Les stats sont mis à jour
-		mettreAJourMetriquesApprentissage(dog); //  enregistrer les métriques
-		gui.mettreAJourGrapheAction(); // Rafraîchir le graphique
-	}
-
-	public Action selectedAction(Animal animal, int random) {
-		ArrayList<String> listNomAction = animal.getListNomAction();
-		HashMap<String, Action> listAction = animal.getListActionPossible();
-		int probaTmp = 0;
-		for (Iterator<String> it = listNomAction.iterator(); it.hasNext();) {
-			String currentAction = it.next();
-			probaTmp += animal.getProba(listAction.get(currentAction));
-			if (random < probaTmp || random == probaTmp) {
-				return listAction.get(currentAction);
-			}
-		}
-		return null;
-	}
-
-	public Dog getDog() {
-		return dog;
-	}
-
-	// public Cat getCat() {
-	//   return cat;
-	// }
-
-	public ChartManager getChartManager() {
-		return chartManager;
-	}
-
-	private void moveLeftElement(MobileElement element) {
+    private void moveLeftElement(MobileElement element) {
 		Block position = element.getPosition();
 		if (position == null) {
 			System.err.println("Erreur: Position nulle pour " + element.getClass().getSimpleName());
@@ -1048,12 +1045,13 @@ public class MobileElementManager {
 		}
 	}
 
-	private void mettreAJourMetriquesApprentissage(Dog dog) {
-		dog.getLearning().degradationNaturelle();
-		chartManager.registerActionScores(dog);
-		chartManager.registerTrustByStep(dog.getConfiance());
-		chartManager.registerMentalStateByStep(dog.getMentalState());
-		chartManager.registerPhysicalStateByStep(dog.getPhysicalState());
-	}
-}
 
+    private void mettreAJourMetriquesApprentissage(Dog dog, Cat cat) {
+        dog.getLearning().degradationNaturelle();
+        cat.getLearning().degradationNaturelle();
+        chartManager.registerActionScores(dog, cat);
+        chartManager.registerTrustByStep(dog, cat);
+        chartManager.registerMentalStateByStep(dog, cat);
+        chartManager.registerPhysicalStateByStep(dog, cat);
+    }
+}
