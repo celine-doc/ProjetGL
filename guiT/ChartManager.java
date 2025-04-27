@@ -67,7 +67,7 @@ public class ChartManager {
 
     public synchronized void registerActionScores(Dog dog, Cat cat) {
         int currentStep = stepCounter++;
-        // Register Dog actions
+        // Dog actions
         for (String actionName : GameConfiguration.listNomActionChien) {
             Integer proba = dog.getProba(GameConfiguration.listActionChien.get(actionName));
             if (proba != null && proba >= 0 && proba <= 100) {
@@ -78,7 +78,7 @@ public class ChartManager {
                 System.out.println("Probabilité invalide pour Chien " + actionName + ": " + proba + ", ignorée.");
             }
         }
-        // Register Cat actions
+        //  Cat actions
         for (String actionName : GameConfiguration.listNomActionChat) {
             Integer proba = cat.getProba(GameConfiguration.listActionChat.get(actionName));
             if (proba != null && proba >= 0 && proba <= 100) {
@@ -294,7 +294,6 @@ public class ChartManager {
     }
 
     public TimeSeries getActionSeries(String actionName) {
-        // Return the dog's series by default for compatibility
         return actionSeriesDog.getOrDefault(actionName, actionSeriesCat.get(actionName));
     }
 
