@@ -7,15 +7,15 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import org.jfree.chart.ChartPanel;
-import org.jfree.chart.JFreeChart;
 import org.jfree.data.xy.XYSeries;
-import org.jfree.data.xy.XYSeriesCollection;
 
 import config.GameConfiguration;
 import map.Map;
@@ -64,7 +64,7 @@ public class MaisonGUI extends JFrame implements Runnable {
         viewLearningButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-            	new GraphiquesApprentissageGUI("Graphiques d'Apprentissage", manager.getChartManager(), GameConfiguration.listNomActionChien);
+                new GraphiquesApprentissageGUI("Graphiques d'Apprentissage", manager.getChartManager(), GameConfiguration.listNomActionChien);
             }
         });
         rightPanel.add(viewLearningButton);
@@ -107,6 +107,22 @@ public class MaisonGUI extends JFrame implements Runnable {
         contentPane.add(rightPanel, BorderLayout.EAST);
         contentPane.add(bottomPanel, BorderLayout.SOUTH);
 
+        // Ajout du KeyListener pour gérer les touches
+        addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                char key = Character.toUpperCase(e.getKeyChar());
+                if (key == 'P' || key == 'R') {
+                    manager.getFather().setActionAnimal(true);
+                    manager.getFather().setTarget(manager.getDog());
+                    manager.getFather().setPunishment(key == 'P'); // 'P' pour punition, 'R' pour récompense
+                    System.out.println("Father cible le chien avec " + (key == 'P' ? "punition" : "récompense"));
+                }
+            }
+        });
+        setFocusable(true); // Permet au JFrame de recevoir les événements clavier
+        requestFocusInWindow(); // Assure que le focus est sur le JFrame
+
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(GameConfiguration.WINDOW_WIDTH, GameConfiguration.WINDOW_HEIGHT);
         setLocationRelativeTo(null);
@@ -133,7 +149,6 @@ public class MaisonGUI extends JFrame implements Runnable {
     }
 
     private void mettreAJourGraphes() {
-        // Les séries sont mises à jour dans ChartManager, juste rafraîchir
         confidenceChartPanel.repaint();
         mentalStateChartPanel.repaint();
         physicalStateChartPanel.repaint();
@@ -145,7 +160,6 @@ public class MaisonGUI extends JFrame implements Runnable {
     class ActionPause implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            // TODO Auto-generated method stub
             pauseGame(true);
         }
     }
@@ -168,7 +182,6 @@ public class MaisonGUI extends JFrame implements Runnable {
     class ActionHelp implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            // TODO Auto-generated method stub
             runningGame = false;
             AideGUI.goToMenuAide(thisM);
         }
@@ -177,16 +190,14 @@ public class MaisonGUI extends JFrame implements Runnable {
     class ActionDog implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            // TODO Auto-generated method stub
             testerJournal();
             new JournalGUI("journal_dog.txt", "Journal du Chien").setVisible(true);
         }
     }
 
     class ActionCat implements ActionListener {
-    	@Override
+        @Override
         public void actionPerformed(ActionEvent e) {
-            // TODO Auto-generated method stub
             testerJournal();
             new JournalGUI("journal_cat.txt", "Journal du Chat").setVisible(true);
         }
