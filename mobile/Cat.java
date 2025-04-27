@@ -20,7 +20,7 @@ public class Cat extends Animal {
 	public Cat(Block position, String location) {
 		this.setPosition(position);
 		this.setLocation(location);
-		this.journal = new Journal("journal_dog.txt");
+		this.journal = new Journal("journal_cat.txt");
 		this.setListActionPossible(GameConfiguration.listActionChien);
 		this.setListNomAction(GameConfiguration.listNomActionChien);
 		// -------
@@ -169,4 +169,3 @@ public class Cat extends Animal {
 
     
 
-    
