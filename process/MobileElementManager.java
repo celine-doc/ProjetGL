@@ -1242,12 +1242,13 @@ public class MobileElementManager {
 		}
 	}
 
-	private void mettreAJourMetriquesApprentissage(Dog dog) {
-		dog.getLearning().degradationNaturelle();
-		chartManager.registerActionScores(dog);
-		chartManager.registerTrustByStep(dog.getConfiance());
-		chartManager.registerMentalStateByStep(dog.getMentalState());
-		chartManager.registerPhysicalStateByStep(dog.getPhysicalState());
-	}
+	private void mettreAJourMetriquesApprentissage(Dog dog, Cat cat) {
+        dog.getLearning().degradationNaturelle();
+        cat.getLearning().degradationNaturelle();
+        chartManager.registerActionScores(dog, cat);
+        chartManager.registerTrustByStep(dog, cat);
+        chartManager.registerMentalStateByStep(dog, cat);
+        chartManager.registerPhysicalStateByStep(dog, cat);
+    }
 }
 
