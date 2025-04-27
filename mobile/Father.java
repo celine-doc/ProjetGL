@@ -6,6 +6,7 @@ public class Father extends MobileElement {
 	private boolean actionAnimal; // A mettre dans une classe individu intermédaire
 	private Animal target; // A mettre dans une classe individu intermédaire
 	private static final long serialVersionUID = 1L;
+	private boolean punishment = false;
 	
 	public Father(Block position) {
 		this.position = position;
@@ -26,6 +27,9 @@ public class Father extends MobileElement {
 	}
 	public void setTarget(Animal target){
 		this.target = target;
+	}
+	public boolean isPunishment() {
+		return punishment;
 	}
 	// ------------------
 }
