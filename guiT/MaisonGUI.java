@@ -28,6 +28,7 @@ public class MaisonGUI extends JFrame implements Runnable {
     private static final long serialVersionUID = 1L;
     private Map map;
     private MobileElementManager manager;
+    private GraphiquesApprentissageGUI learningGUI;
     private Dashboard dashboard;
     private boolean runningGame;
     private boolean running;
@@ -39,9 +40,10 @@ public class MaisonGUI extends JFrame implements Runnable {
     private XYSeries mentalStateSeries;
     private XYSeries physicalStateSeries;
 
-    public MaisonGUI(String title) {
+    public MaisonGUI(String title, GraphiquesApprentissageGUI learningGUI) {
         super(title);
-        thisM = this;
+        this.thisM = this;
+        this.learningGUI = learningGUI;
         init();
     }
 
@@ -50,7 +52,7 @@ public class MaisonGUI extends JFrame implements Runnable {
         contentPane.setLayout(new BorderLayout());
 
         map = new Map(GameConfiguration.LINE_COUNT, GameConfiguration.COLUMN_COUNT);
-        manager = new MobileElementManager(map);
+        manager = new MobileElementManager(map, learningGUI);
         dashboard = new Dashboard();
         dashboard.setManager(manager);
 
@@ -115,7 +117,7 @@ public class MaisonGUI extends JFrame implements Runnable {
                 if (key == 'P' || key == 'R') {
                     manager.getFather().setActionAnimal(true);
                     manager.getFather().setTarget(manager.getDog());
-                    manager.getFather().setPunishment(key == 'P'); // 'P' pour punition, 'R' pour récompense
+                    // manager.getFather().setPunishment(key == 'P'); // 'P' pour punition, 'R' pour récompense
                     System.out.println("Father cible le chien avec " + (key == 'P' ? "punition" : "récompense"));
                 }
             }
@@ -221,7 +223,7 @@ public class MaisonGUI extends JFrame implements Runnable {
             try {
                 if (runningGame) {
                     dashboard.repaint();
-                    manager.action((int) ((Math.random() * 100)) % 2);
+                    manager.action((int) ((Math.random() * 100)) % 100);
                     mettreAJourGraphes();
                     iterationCount++;
                     if (iterationCount % 10 == 0) {
