@@ -27,13 +27,13 @@ public abstract class Animal extends MobileElement {
         ajusterEtatMental(reussi, action);
     }
 
-    private void ajusterConfiance(boolean reussi, Action action) {
+    protected void ajusterConfiance(boolean reussi, Action action) {
         double adjustment = reussi ? 0.01 : -0.01; // Réduit de 0.02 à 0.01
         confiance = Math.min(1.0, Math.max(0.0, confiance + adjustment));
         System.out.printf("Confiance actuelle: %.1f%%\n", confiance * 100);
     }
 
-    private void ajusterEtatDeSante(boolean reussi, Action action) {
+    protected void ajusterEtatDeSante(boolean reussi, Action action) {
         double adjustment = reussi ? 0.01 : -0.01; // Réduit de 0.02 à 0.01
         adjustment *= Math.min(1.0, action.getTimeAction() / 10.0);
         if (stateAnimal.getphysicalState() < 0.3) {
@@ -43,7 +43,7 @@ public abstract class Animal extends MobileElement {
         System.out.printf("État de santé actuel: %.1f%%\n", stateAnimal.getphysicalState() * 100);
     }
 
-    private void ajusterEtatMental(boolean reussi, Action action) {
+    protected void ajusterEtatMental(boolean reussi, Action action) {
         double adjustment = reussi ? 0.008 : -0.008; // Réduit de 0.015 à 0.008
         adjustment *= Math.min(1.0, action.getTimeAction() / 10.0);
         if (stateAnimal.getMentalState() < 0.3) {
