@@ -10,63 +10,67 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import config.GameConfiguration;
+import map.Map;
 
 public class MenuGUI extends JFrame {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	MaisonGUI menuJeu;
-	
-	public MenuGUI(String title) {
-		super(title);
-		init();
-	}
-	
-	private void init() {
+    private static final long serialVersionUID = 1L;
+    MaisonGUI menuJeu;
 
-		Container contentPane = getContentPane();
-		contentPane.setLayout(new BorderLayout());
-		
-		JPanel buttonPanel = new JPanel(new GridLayout(4, 1, 30, 30));
-		
-		JButton nouvellePartie = new JButton("Nouvelle Partie");
-        JButton chargerPartie = new JButton("Charger Partie ");
+    public MenuGUI(String title) {
+        super(title);
+        init();
+    }
+
+    private void init() {
+        Container contentPane = getContentPane();
+        contentPane.setLayout(new BorderLayout());
+
+        JPanel buttonPanel = new JPanel(new GridLayout(4, 1, 30, 30));
+
+        JButton nouvellePartie = new JButton("Nouvelle Partie");
+        JButton chargerPartie = new JButton("Charger Partie");
         JButton paramètres = new JButton("Paramètres");
         JButton quitter = new JButton("Quitter");
-        
+
         buttonPanel.add(nouvellePartie);
         buttonPanel.add(chargerPartie);
         buttonPanel.add(paramètres);
         buttonPanel.add(quitter);
-        
+
         contentPane.add(buttonPanel, BorderLayout.CENTER);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setSize(500,500);
-		setLocationRelativeTo(null);
-		setVisible(true);
-		setResizable(false);
-	
-	
-		nouvellePartie.addActionListener(new actionStartGame());
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setSize(500, 500);
+        setLocationRelativeTo(null);
+        setVisible(true);
+        setResizable(false);
 
-	}
-	
-	public static void main(String[] args ){
-		MenuGUI menuGUI = new MenuGUI("Menu");
-	}
-	private void close() {
-		this.dispose();
-	}
-	class actionStartGame implements ActionListener {
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
-			menuJeu = new MaisonGUI("maison");
-			close();
-		}
+        nouvellePartie.addActionListener(new actionStartGame());
+        quitter.addActionListener(e -> System.exit(0)); // Ajouter une action pour quitter
+    }
+
+    public static void main(String[] args) {
+        new MenuGUI("Menu");
+    }
+
+    private void close() {
+        this.dispose();
+    }
+
+    class actionStartGame implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            // Initialiser les dépendances
+            Map map = new Map(GameConfiguration.LINE_COUNT, GameConfiguration.COLUMN_COUNT);
+            ChartManager chartManager = new ChartManager();
+            GraphiquesApprentissageGUI learningGUI = new GraphiquesApprentissageGUI(
+                "Graphiques d'Apprentissage",
+                chartManager,
+                GameConfiguration.listNomActionChien
+            );
+            menuJeu = new MaisonGUI("Maison", learningGUI);
+            close();
+        }
+    }
 		
-	}
 }
-
-  
