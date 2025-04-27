@@ -4,80 +4,66 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Learning {
-    private Map<Action, Integer> probabilitesActions;
-    private Map<Action, Long> dernieresExecutions;
-    private static final int PROBA_MAX = 100;
-    private static final int PROBA_MIN = 0;
-    private static final long INTERVALLE_DEGRADATION = 10000;
+    private Map<Action, Integer> probasActions;  // Stocke les probabilités des actions (0 à 100)
+    private Map<Action, Long> lastPerformed;    // Timestamp de la dernière exécution
+    private static final int MAX_PROBA = 100;   // Borne supérieure
+    private static final int MIN_PROBA = 0;     // Borne inférieure
+    private static final long DEGRADATION_INTERVAL = 15000;  // 15 secondes
 
     public Learning() {
-        this.probabilitesActions = new HashMap<>();
-        this.dernieresExecutions = new HashMap<>();
+        this.probasActions = new HashMap<>();
+        this.lastPerformed = new HashMap<>();
     }
 
     private void initialiserAction(Action action) {
-        if (!probabilitesActions.containsKey(action)) {
-            probabilitesActions.put(action, action.getProba());
-            dernieresExecutions.put(action, System.currentTimeMillis());
+        if (!probasActions.containsKey(action)) {
+            probasActions.put(action, action.getProba());
+            lastPerformed.put(action, System.currentTimeMillis());
         }
     }
 
     public void ajouterRecompense(Action action) {
         initialiserAction(action);
-        int recompense = 1; // Réduit de 2 à 1
-        recompense = (int) (recompense * Math.min(1.0, action.getTimeAction() / 10.0));
-        int nouvelleProba = Math.min(PROBA_MAX, probabilitesActions.get(action) + recompense);
-        probabilitesActions.put(action, nouvelleProba);
-        dernieresExecutions.put(action, System.currentTimeMillis());
-        System.out.println("Action récompensée : " + action.getName() + ", Probabilité : " + nouvelleProba + "%");
+        int reward = 2;  // Valeur fixe
+        int newProba = Math.min(MAX_PROBA, probasActions.get(action) + reward);
+        probasActions.put(action, newProba);
+        lastPerformed.put(action, System.currentTimeMillis());
+        System.out.println("Action récompensée : " + action.getName() + ", Probabilité: " + newProba + "%");
     }
 
     public void ajouterPunition(Action action) {
         initialiserAction(action);
-        int punition = 1; // Réduit de 2 à 1
-        punition = (int) (punition * Math.min(1.0, action.getTimeAction() / 10.0));
-        int nouvelleProba = Math.max(PROBA_MIN, probabilitesActions.get(action) - punition);
-        probabilitesActions.put(action, nouvelleProba);
-        dernieresExecutions.put(action, System.currentTimeMillis());
-        System.out.println("Action punie : " + action.getName() + ", Probabilité : " + nouvelleProba + "%");
+        int punishment = 2;  // Valeur fixe
+        int newProba = Math.max(MIN_PROBA, probasActions.get(action) - punishment);
+        probasActions.put(action, newProba);
+        lastPerformed.put(action, System.currentTimeMillis());
+        System.out.println("Action punie : " + action.getName() + ", Probabilité: " + newProba + "%");
     }
 
     public void degradationNaturelle() {
-        long heureActuelle = System.currentTimeMillis();
-        for (Action action : probabilitesActions.keySet()) {
-            long derniereExecution = dernieresExecutions.getOrDefault(action, heureActuelle);
-            int probaActuelle = probabilitesActions.get(action);
-            int probaInitiale = action.getProba();
-
-            // Dégradation constante (augmentée à 2%)
-            if (probaActuelle > probaInitiale) {
-                int nouvelleProba = Math.max(probaInitiale, probaActuelle - 2); // Augmenté de 1 à 2
-                probabilitesActions.put(action, nouvelleProba);
-                System.out.println("Dégradation constante pour " + action.getName() + " : " + nouvelleProba + "%");
-            }
-
-            // Dégradation périodique toutes les 10 secondes
-            if (heureActuelle - derniereExecution >= INTERVALLE_DEGRADATION) {
-                if (probaActuelle > probaInitiale) {
-                    int nouvelleProba = Math.max(probaInitiale, probaActuelle - 3);
-                    probabilitesActions.put(action, nouvelleProba);
-                    System.out.println("Dégradation périodique pour " + action.getName() + " : " + nouvelleProba + "%");
+        long currentTime = System.currentTimeMillis();
+        for (Action action : probasActions.keySet()) {
+            long lastTime = lastPerformed.getOrDefault(action, currentTime);
+            if (currentTime - lastTime > DEGRADATION_INTERVAL) {
+                int currentProba = probasActions.get(action);
+                if (currentProba > action.getProba()) {
+                    probasActions.put(action, Math.max(action.getProba(), currentProba - 1));
+                    System.out.println("Dégradation pour " + action.getName() + ": " + probasActions.get(action) + "%");
                 }
-                dernieresExecutions.put(action, heureActuelle);
             }
         }
     }
 
     public void afficherApprentissage() {
         System.out.println("\nÉtat de l'apprentissage :");
-        for (Action action : probabilitesActions.keySet()) {
-            System.out.println("  Action : " + action.getName() + ", Probabilité : " + probabilitesActions.get(action) +
-                               "%, Dernière exécution : " + dernieresExecutions.get(action));
+        for (Action action : probasActions.keySet()) {
+            System.out.println("  Action: " + action.getName() + ", Probabilité: " + probasActions.get(action) +
+                               "%, Dernière exécution: " + lastPerformed.get(action));
         }
     }
 
     public int getProba(Action action) {
         initialiserAction(action);
-        return probabilitesActions.get(action);
+        return probasActions.get(action);
     }
 }
